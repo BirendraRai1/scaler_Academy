@@ -1,0 +1,100 @@
+difference between spread and rest operator
+difference between call bind and apply
+difference between let and var
+what is event loop
+output of this
+________________
+for (var i = 0; i < 5; i++) {
+  setTimeout(function() { console.log(i); }, i * 1000 );
+}
+difference between process.tick() and setImmediate()
+difference between map reduce and filter
+const password = 'pass123'
+output '****123'
+
+1>what is refresh token
+2>where is aggregate used in mongodb
+3>what is promises and callback
+4>How do you log a request on terminal
+5>separate the unique and duplicate elements in an array
+https://www.youtube.com/watch?v=8ci8WfQ6cns
+Solution:-
+const arr = [1,2,3,4,2,3,5,6,6,7,8,9]
+
+let hm = new Map()
+for(let i=0;i<arr.length;i++){
+	if(hm.has(arr[i])){
+  	hm.set(arr[i],hm.get(arr[i])+1)
+  }
+  else{
+  hm.set(arr[i],1)
+  }
+  
+}
+
+let duplicate = [],
+		unique = [];
+for (let [key, value] of hm.entries()) {
+    if(value>1){
+      duplicate.push(key)
+    }
+    else{
+    unique.push(key)
+    }
+  }
+  console.log(duplicate)
+  console.log(unique)
+6>what is useeffect() used for in react
+fibonalabs
+_____________
+7>what is callback function??
+8>what is hoisting in javascript??
+9> what is a package in nodejs??
+10>difference between shift() and unshift()
+11>difference between splice() and slice()
+12>difference between shallow and deep copy in javascript
+freecodecamp.org/news/copying-stuff-in-javascript-how-to-differentiate-between-deep-and-shallow-copies-b6d8c1ef09cd/
+13>let arr = [4,4,4,1,2,2,3]
+let set = new Set(arr)
+console.log([...set].sort((a,b)=>a-b))
+low level design links
+_________________________
+https://www.youtube.com/playlist?list=PL6W8uoQQ2c61X_9e6Net0WdYZidm7zooW
+
+high level design links
+_________________________
+https://www.youtube.com/playlist?list=PL6W8uoQQ2c63W58rpNFDwdrBnq5G3EfT7
+
+
+javascript playlist
+_________________________
+https://www.youtube.com/watch?v=pN6jk0uUrD8&list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP&index=2
+
+promises in javascript
+_________________________
+https://www.youtube.com/watch?v=U74BJcr8NeQ
+
+All
+-----
+https://www.youtube.com/watch?v=U74BJcr8NeQ&list=RDCMUC3N9i_KvKZYP4F84FPIzgPQ&start_radio=1
+
+callback hell
+________________
+https://www.youtube.com/watch?v=yEKtJGha3yM
+
+OOP in javascript
+_________________________
+https://www.youtube.com/watch?v=FgXFoSr2Db8&list=PLXQpH_kZIxTWQfh_krE4sI_8etq5rH_z6
+
+prototypal inheritance
+_________________________
+https://www.youtube.com/watch?v=wstwjQ1yqWQ
+
+Async vs Defer
+________________
+https://www.youtube.com/watch?v=IrHmpdORLu8 
+
+astexplorer.net
+
+
+Stop treating your job as everything and start treating it as a business.
