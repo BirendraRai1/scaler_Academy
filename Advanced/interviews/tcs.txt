@@ -33,3 +33,6 @@ const books = [
     ]
     solution
     https://www.geeksforgeeks.org/how-to-remove-duplicates-from-an-array-of-objects-using-javascript/
+
+
+//new Features in ES6
