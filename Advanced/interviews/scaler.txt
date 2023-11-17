@@ -1,0 +1,6 @@
+what is difference between state and props?
+how to optimise the fetch function using debounce?
+what is prop drilling?
+what are synthetic event in react?
+what are lifecycle of useEffect?
+what is lazy loading?

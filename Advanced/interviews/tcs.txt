@@ -1,0 +1,35 @@
+//remove fullName in key to name
+let details = [{
+    "fullName": "E-1",
+    "age": 21
+},{
+    "fullName": "E-2",
+    "age": 22
+},{
+    "fullName": "E-3",
+    "age": 23
+},{
+    "fullName": "E-4",
+    "age": 24
+}];
+let arr =[]
+for(let i=0;i<details.length;i++){
+	let obj={}
+  for(let keys in details[i]){
+  if(keys=="fullName")
+  	obj.name = details[i][keys]
+  else
+  	obj[keys]=details[i][keys]
+  }
+  arr.push(obj)
+}
+
+//remove duplicates in books
+const books = [
+    { title: "C++", author: "Bjarne" },
+    { title: "Java", author: "James" },
+    { title: "Python", author: "Guido" },
+    { title: "Java", author: "James" }
+    ]
+    solution
+    https://www.geeksforgeeks.org/how-to-remove-duplicates-from-an-array-of-objects-using-javascript/
