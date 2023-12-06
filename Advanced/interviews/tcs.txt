@@ -13,7 +13,7 @@ let details = [{
     "age": 24
 }];
 let arr =[]
-for(let i=0;i<details.length;i++){
+1.Answer>for(let i=0;i<details.length;i++){
 	let obj={}
   for(let keys in details[i]){
   if(keys=="fullName")
@@ -22,6 +22,15 @@ for(let i=0;i<details.length;i++){
   	obj[keys]=details[i][keys]
   }
   arr.push(obj)
+}
+
+2.Answer>for(let i=0;i<details.length;i++){
+	for(let key in details[i]){
+  	if(key=="fullName"){
+    	details[i]["name"]=details[i][key]
+      delete details[i][key]
+    }    
+  }
 }
 
 //remove duplicates in books
@@ -33,6 +42,35 @@ const books = [
     ]
     solution
     https://www.geeksforgeeks.org/how-to-remove-duplicates-from-an-array-of-objects-using-javascript/
+ans1>let newArray = []
+    let uniqueObjects = {}
+    for(let i=0;i<books.length;i++){
+	    uniqueObjects[books[i]["title"]]=books[i]
+    }
+    for(let key in uniqueObjects){
+        newArray.push(uniqueObjects[key])
+    }
+    console.log(newArray)
+
+ans2>let modifiedBooks = books.map(JSON.stringify)
+     let newSetOfBooks = new Set(modifiedBooks)
+     let uniqueBooks = Array.from(newSetOfBooks).map(JSON.parse)
+     console.log(uniqueBooks)
+
+ans3>let ids = books.map(({title})=>title)
+     console.log(ids)
+     let filteredBooks = books.filter(({title},index)=>!ids.includes(title,index+1))
+     console.log(filteredBooks)
+     The includes() method of Array instances determines whether an array includes a certain value among its entries, returning true or false as appropriate
+//syntax of includes
+includes(searchElement, fromIndex)
+
+ans4>let newBooks = books.filter(({title},index)=>index===books.findIndex(o=>o.title==title))
+     console.log(newBooks)
+The findIndex() method of Array instances returns the index of the first element in an array that satisfies the provided testing function. 
+If no elements satisfy the testing function, -1 is returned
+//syntax of findIndex
+findIndex(callbackFn, thisArg)
 
 
 //new Features in ES6
