@@ -1,0 +1,11 @@
+1>What is event driven programming in nodejs?
+https://www.geeksforgeeks.org/explain-event-driven-programming-in-node-js/
+2>what is pyramid of doom in callback?
+3>what is callback?
+ans>Any function that is passed as an argument to another function 
+so that it can be executed in that other function is called as a callback function
+4>what are RESTfull api
+ans>A REST API (also known as RESTful API) is an application programming interface (API or web API) 
+that conforms to the constraints of REST architectural style and allows for interaction with RESTful web services. 
+REST stands for representational state transfer.
+REST APIs use the HTTP protocol to send and receive data
