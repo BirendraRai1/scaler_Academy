@@ -1,0 +1,6 @@
+How to design a rest api
+ans>https://www.freecodecamp.org/news/rest-api-best-practices-rest-endpoint-design-examples/
+implement pagination in ecommerce website
+
+your currect ctc is this much and your expected is this much?
+I deserve this and what you can offer?

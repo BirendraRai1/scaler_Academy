@@ -4,3 +4,4 @@ what is prop drilling?
 what are synthetic event in react?
 what are lifecycle of useEffect?
 what is lazy loading?
+what is difference between promise and async await

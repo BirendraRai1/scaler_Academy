@@ -9,3 +9,41 @@ ans>A REST API (also known as RESTful API) is an application programming interfa
 that conforms to the constraints of REST architectural style and allows for interaction with RESTful web services. 
 REST stands for representational state transfer.
 REST APIs use the HTTP protocol to send and receive data
+5>𝐖𝐡𝐚𝐭 𝐢𝐬 𝐭𝐡𝐞 𝐝𝐢𝐟𝐟𝐫𝐞𝐧𝐜𝐞 𝐛𝐞𝐭𝐰𝐞𝐞𝐧 𝐩𝐚c𝐤𝐚𝐠𝐞.𝐣𝐬𝐨𝐧 𝐚𝐧𝐝 𝐩𝐚c𝐤𝐚𝐠𝐞-𝐥𝐨𝐜𝐤.𝐣𝐬𝐨𝐧
+ans>𝐩𝐚c𝐤𝐚𝐠𝐞.𝐣𝐬𝐨𝐧 : Developers manually edit this file to add or rename dependencies, modifies scripts. It records the minimum version your app needs.
+    𝐩𝐚c𝐤𝐚𝐠𝐞-𝐥𝐨𝐜𝐤.𝐣𝐬𝐨𝐧 : It records the exact version of each installed package. It generally not meant to be manually edited, as it is managed automatically by npm
+6>𝐖𝐡𝐚𝐭 𝐢𝐬 𝐭𝐡𝐞 𝐝𝐢𝐟𝐟𝐞𝐫𝐞𝐧𝐜𝐞 𝐛𝐞𝐭𝐰𝐞𝐞𝐧 𝐅𝐮𝐧𝐜𝐭𝐢𝐨𝐧 𝐒𝐭𝐚𝐭𝐞𝐦𝐞𝐧𝐭 𝐚𝐧𝐝 𝐅𝐮𝐧𝐜𝐭𝐢𝐨𝐧 𝐄𝐱𝐩𝐫𝐞𝐬𝐬𝐢𝐨𝐧 ❓
+ans>The major difference between function statement and function expression is 𝐇𝐨𝐢𝐬𝐭𝐢𝐧𝐠.
+➡ In case of 𝐅𝐮𝐧𝐜𝐭𝐢𝐨𝐧 𝐒𝐭𝐚𝐭𝐞𝐦𝐞𝐧𝐭, we can call the function before declaration . During memory creation phase the function is allocated a memory and the whole function stored inside this.
+➡ But in case of 𝐅𝐮𝐧𝐜𝐭𝐢𝐨𝐧 𝐄𝐱𝐩𝐫𝐞𝐬𝐬𝐢𝐨𝐧, we can not call the function before declaration. During the memory creation phase the function is treated as any other variable. So the memory is allocated but it is assigned with 𝐮𝐧𝐝𝐞𝐟𝐢𝐧𝐞𝐝. Thus this function is not accessible before execution of code.
+
+💡 In the below code we are getting a 𝐓𝐲𝐩𝐞𝐄𝐫𝐫𝐨𝐫 while calling b(). As we call b() before the function declaration for b, it leads to a 𝐓𝐲𝐩𝐞𝐄𝐫𝐫𝐨𝐫 because at that point in the code, 𝐛 𝐢𝐬 𝐬𝐭𝐢𝐥𝐥 𝐮𝐧𝐝𝐞𝐟𝐢𝐧𝐞𝐝.
+
+📌 If we declare the 𝐅𝐮𝐧𝐜𝐭𝐢𝐨𝐧 𝐄𝐱𝐩𝐫𝐞𝐬𝐬𝐢𝐨𝐧 with 𝐥𝐞𝐭/𝐜𝐨𝐧𝐬𝐭 it leads to 𝐑𝐞𝐟𝐞𝐫𝐞𝐧𝐜𝐞𝐄𝐫𝐫𝐨𝐫. Because we know that due to 𝐓𝐞𝐦𝐩𝐨𝐫𝐚𝐥 𝐃𝐞𝐚𝐝 𝐙𝐨𝐧𝐞 we can not access let/const variable before initializes it with a value
+
+7>𝐋𝐞𝐭'𝐬 𝐝𝐢𝐬𝐜𝐮𝐬𝐬 𝐚 𝐜𝐨𝐦𝐦𝐨𝐧 𝐉𝐒 𝐜𝐡𝐚𝐥𝐥𝐞𝐧𝐠𝐞 𝐫𝐞𝐥𝐚𝐭𝐞𝐝 𝐭𝐨 𝐬𝐞𝐭𝐓𝐢𝐦𝐞𝐨𝐮𝐭 + 𝐜𝐥𝐨𝐬𝐮𝐫𝐞𝐬 : 
+ans>function x(){
+for(var i = 0; i <= 5; i++){
+setTimeout(function(){
+console.log(i);
+}, i * 1000);
+}
+console.log("Hello JavaScript !")
+}
+x();
+
+the expected output might be 1,2,3,4,5, each printed after each second. But the actual out will be 6 printed five times. Because -
+➡ When the loop runs for the first time "setTimeout" takes the function and store it somewhere. Also the function remembers the reference of i.
+➡ JS doesn't wait for anything. it will run this loop again and again, so the value of 𝐢 𝐛𝐞𝐜𝐚𝐦𝐞 𝟔.
+➡ When the timer expired and the callback function runs , the value of i became 6 and it prints 6 every time.
+
+𝐇𝐨𝐰 𝐭𝐨 𝐟𝐢𝐱 𝐭𝐡𝐢𝐬 𝐩𝐫𝐨𝐛𝐥𝐞𝐦:
+➡ Use "let" over "var".
+➡ Let has Block Scope, each time setTimeout runs, this callback function creates a 𝐧𝐞𝐰 𝐜𝐨𝐩𝐲 𝐨𝐟 𝐢 𝐚𝐧𝐝 𝐟𝐨𝐫𝐦𝐬 𝐜𝐥𝐨𝐬𝐮𝐫𝐞 𝐰𝐢𝐭𝐡 𝐢𝐭.
+This is how the problem will be solved.
+
+𝐇𝐨𝐰 𝐭𝐨 𝐬𝐨𝐥𝐯𝐞 𝐭𝐡𝐢𝐬 𝐩𝐫𝐨𝐛𝐥𝐞𝐦 𝐰𝐢𝐭𝐡𝐨𝐮𝐭 𝐮𝐬𝐢𝐧𝐠 "𝐥𝐞𝐭" :
+➡By creating a closure.
+➡ Create a function and enclose setTimeout within it.
+➡ Call the function with i and pass i as an parameter inside the function.
+➡ Every time we call the function it'll create a new copy of i. That's how the problem will be solved and we'll get the output 1 2 3 4 5
