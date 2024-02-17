@@ -33,3 +33,13 @@ Discuss the benefits of using spread syntax and differentiate it from rest synta
 Explain debounce vs throttling.?
 Define what a promise is and describe its applications.?
 Explore how Object-Oriented Programming (OOP) principles can be applied when coding in JavaScript.
+
+const bfObject = {
+value: 42,
+gfFunction: function() {
+let value1=23
+setTimeout(function() { console.log("Result: ", this.value,"value1",value1); }, 1000);
+},
+}
+
+bfObject.gfFunction();
