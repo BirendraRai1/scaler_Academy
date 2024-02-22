@@ -1,3 +1,4 @@
+//Harshit Chpora
 What is event delegation, and how does it function in JavaScript?
 Can you provide an illustration of how ES6 has altered the approach to working with "this" in JavaScript?
 Explain the concept of prototypal inheritance?
@@ -34,17 +35,6 @@ Explain debounce vs throttling.?
 Define what a promise is and describe its applications.?
 Explore how Object-Oriented Programming (OOP) principles can be applied when coding in JavaScript.
 
-const bfObject = {
-value: 42,
-gfFunction: function() {
-let value1=23
-setTimeout(function() { console.log("Result: ", this.value,"value1",value1); }, 1000);
-},
-}
-
-bfObject.gfFunction();
-
-
 
 //Arun M
 Implement a function that serializes a Javascript value into a JSON string—(asked in Meta)
@@ -71,3 +61,30 @@ Implement memoizing or caching identical API requests—(asked in Facebook)
 
 Go through my "One Stop Javascript Interview" book 🚀 where I solved & explained all of these (50+) “solved & asked” questions in great-depth :
 https://lnkd.in/gdMFzk-n
+
+
+//Chirag Goel
+1>const bfObject = {
+value: 42,
+gfFunction: function() {
+let value1=23
+setTimeout(function() { console.log("Result: ", this.value,"value1",value1); }, 1000);
+},
+}
+
+bfObject.gfFunction();
+
+2>const bf1Object = { 
+ value: "BF1", 
+ gfFunction: () => { 
+ console.log("Result: ", this.value)
+ }, 
+ } 
+
+const bf2Object = {
+ value: "BF2"
+}
+
+const gfFunctionRef = bf1Object.gfFunction.bind(bf2Object);
+gfFunctionRef();
+video link https://www.youtube.com/watch?v=hwoU8NCICSE
