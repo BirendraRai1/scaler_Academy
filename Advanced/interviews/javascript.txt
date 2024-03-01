@@ -88,3 +88,6 @@ const bf2Object = {
 const gfFunctionRef = bf1Object.gfFunction.bind(bf2Object);
 gfFunctionRef();
 video link https://www.youtube.com/watch?v=hwoU8NCICSE
+
+
+3>Guess the output. 3>2>1 === true; 
