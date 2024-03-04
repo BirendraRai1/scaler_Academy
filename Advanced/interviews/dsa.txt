@@ -48,3 +48,36 @@ function checkUnique(s,mid){
     }
     return false
 }
+
+
+q>Sort the data in ascending order of count of factors. If count of factors are equal then sort on the basis of magnitude.
+sol>function countFactors(x){
+	let count = 0
+	for(let i=1;i<=x;i++){
+  	if(x%i==0)
+    	count++
+  }
+  return count
+}
+
+function sortInAscendingOrder(arr){
+	let arr1 = []
+  for(let i=0;i<arr.length;i++){
+  	arr1.push([countFactors(arr[i]),arr[i]])
+  }
+  arr1.sort((a,b)=>{
+    if(a[0]<b[0])
+  	   return a[0]-b[0]
+    else if(a[0]==b[0]){
+    	return a[1]-b[1]
+    }
+  })
+  let arr2 = []
+  for(let i=0;i<arr1.length;i++)
+  	arr2.push(arr1[i][1])
+  return arr2
+  
+}
+
+
+console.log(sortInAscendingOrder([9,3,10,6,4]))
