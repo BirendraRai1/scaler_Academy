@@ -78,6 +78,17 @@ function sortInAscendingOrder(arr){
   return arr2
   
 }
-
-
 console.log(sortInAscendingOrder([9,3,10,6,4]))
+
+q>String s.Toggle the case of each character
+//point to remember strings are immutable in javascript
+sol>let str = "AzBs"
+let str2=""
+for(let i=0;i<str.length;i++){
+  if(str[i]>='A' && str[i]<='Z')
+    str2+=String.fromCharCode(32+str[i].charCodeAt(0))
+  else
+   str2+=String.fromCharCode(str[i].charCodeAt(0)-32)
+  // console.log("str[i] is",str[i])
+}
+console.log(str2) 

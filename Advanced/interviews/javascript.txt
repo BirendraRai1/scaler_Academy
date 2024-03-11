@@ -91,3 +91,32 @@ video link https://www.youtube.com/watch?v=hwoU8NCICSE
 
 
 3>Guess the output. 3>2>1 === true; 
+
+
+4>const display = ()=>{
+  try{
+  return "hello"
+  } catch(error){
+  return "error"
+  }finally{
+  return "world"
+  }
+}
+
+console.log(display())
+the above code produces output as world.This is because in javascript whenever we add a finally block to try/catch it will
+always be executed even if there is an error or a return statement in the try or catch block
+
+and as there is no error happened in the try block catch block will not be executed but finally block will be executed and will
+be produce the output as world. So return statement of finally block will override the return statement of try block
+
+5>console.log(1)
+setTimeout(()=>console.log(2))
+Promise.resolve().then(()=>console.log(3))
+Promise.resolve().then(()=>setTimeout(()=>console.log(4)))
+Promise.resolve().then(()=>console.log(5))
+setTimeout(()=>console.log(6))
+console.log(7)
+
+output:-1735264
+
