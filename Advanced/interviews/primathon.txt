@@ -5,3 +5,4 @@ polyfill of reduce
 can we join two tables in mongodb?
 find the permutations of all the given digits(Backtracking)
 does mongodb follow acid property?
+what are acid properties
