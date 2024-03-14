@@ -1,0 +1,7 @@
+oops in javascript
+how to pass store in express rate limit
+disadvantages of JWT
+polyfill of reduce
+can we join two tables in mongodb?
+find the permutations of all the given digits(Backtracking)
+does mongodb follow acid property?
