@@ -1,0 +1,6 @@
+difference between package.json and package.lock.json
+the package. json file focuses on project metadata and specifying the desired versions of dependencies, while the package-lock. json file ensures deterministic installations by locking the exact versions of dependencies
+
+difference between cookies and localstorage
+Cookies are a good option for small amounts of data that need to be sent to the server with each request, while local storage is better suited for larger amounts of data that need to persist between visits to the website
+
