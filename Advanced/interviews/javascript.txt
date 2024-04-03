@@ -87,6 +87,37 @@ const bf2Object = {
 
 const gfFunctionRef = bf1Object.gfFunction.bind(bf2Object);
 gfFunctionRef();
+
+3>const bf1Object = { 
+ value: "BF1", 
+ gfFunction: function(){ 
+ console.log("Result: ", this.value)
+ }, 
+ } 
+
+const bf2Object = {
+ value: "BF2"
+}
+
+const gfFunctionRef = bf1Object.gfFunction.bind(bf2Object);
+gfFunctionRef(); 
+
+4>const bf1Object = { 
+    value: "BF1", 
+      gfFunction: function(){ 
+      function function1(){
+      console.log("Result: ", this.value)
+    }
+    function1()
+  },
+} 
+
+const bf2Object = {
+ value: "BF2"
+}
+
+const gfFunctionRef = bf1Object.gfFunction.bind(bf2Object);
+gfFunctionRef();
 video link https://www.youtube.com/watch?v=hwoU8NCICSE
 
 
