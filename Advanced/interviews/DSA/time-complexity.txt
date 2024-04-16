@@ -1,0 +1,60 @@
+1>An algorithm consists of two independent piece of code, having complexities f(n) and g(n) respectively. What would be the complexity of the complete algorithm
+ans :- Max(f(n),g(n))
+
+2>int count=0
+for(int i=n;i>0;i/=2){
+  for(int j=0;j<i;j++){
+    count+=1
+  }
+}
+
+ans:-O(n)
+explanation:Hey BIRENDRA , in the first iteration when i=N, the inner loop will run N times
+
+in next iteration when i=N/2 the inner loop runs N/2 times and so on
+
+so total iterations will be N + N/2 + N/4 + .... + 1 in total
+
+This sum of all the above terms is approximately equal to 2*N
+
+So the time complexity of this code will be O(2N) which is same as O(N)
+
+3>void fun(int n){
+  for(int i=1;i*i<=n;i++){
+    for(int j=1;j*j<=i;j+=i){
+      //O(1) operations
+    }
+  }
+}
+
+ans:-O(sqrt(n))
+
+4>void solve(int n){
+  for(int i=0;i<pow(2,n);i++){
+    int j=i;
+    while(j>0){
+      j-=1
+    }
+  }
+}
+
+ans:-O(4^n)
+
+5>int i=0
+while(i*i<=n){
+  for(int j=0;j<=n;j++){
+    for(int k=0;k<=n;k++,i++){
+      //O(1)operation
+    }
+  }
+  i++
+}
+ans:- O(n^2)
+
+6>for(int i=3;i<n/3;i+=3){
+  for(int j=2;j<n/2;j+=2){
+    //O(1) operation
+  }
+}
+
+ans:-O(n^2)
