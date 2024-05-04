@@ -278,3 +278,18 @@ secondFunction();
 
 output:-second,I have resolved! and I have resolved!,second
 
+
+8>let func = ()=>{
+	console.log(1)
+}
+setTimeout(()=>{
+	func = ()=>{
+  	console.log(2)
+  }
+},0)
+setTimeout(func,100)
+
+
+output:-The output is only => 1
+Because the second timeout didn't actually call the inner function inside the callback function
+
