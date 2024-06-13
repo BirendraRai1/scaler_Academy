@@ -93,8 +93,9 @@ function debounce(fn, delay) {
 //Copy code
 const controller = new AbortController();
 const signal = controller.signal;
+//dev.to/amangupta/optimizing-ux-balancing-debouncing-and-api-call-abortion-3eb9
 
-function fetchData(url, signal) {
+https: function fetchData(url, signal) {
   return fetch(url, { signal })
     .then((response) => response.json())
     .catch((error) => {
@@ -126,3 +127,5 @@ input.addEventListener("input", (event) => {
 //Debounce Function: The debounce function ensures that the fetchData function is not called too frequently. It waits for 300 milliseconds after the last call before invoking fetchData.
 //AbortController: Before making a new fetch request, the previous one is aborted by calling controller.abort(). A new AbortController is then created for the new fetch request.
 //Event Listener: The debouncedFetch function is used as an event listener for the input field, ensuring that fetch requests are debounced and previous requests are cancelled as needed.
+
+//important link https://dev.to/amangupta/optimizing-ux-balancing-debouncing-and-api-call-abortion-3eb9
