@@ -1,0 +1,16 @@
+1>JS : https://www.patterns.dev/vanilla
+2>React : https://www.patterns.dev/react
+
+list of important machine coding questions
+1. Typeahead
+2. Infinite scroll
+3. count down timer, stop watch
+4. file Explorer and nested comment box
+5. Accordian
+6. CRUD task 
+7. toast
+8. star rating
+9. Progress bar
+10. otp
+11. tic tac toe
+12. todo list
