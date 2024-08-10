@@ -73,3 +73,5 @@ const resetGame = () => {
 //Event Listener for reset button
 const resetButton = document.getElementById("reset-btn");
 resetButton.addEventListener("click", resetGame);
+
+//refrence link https://dev.to/husayn01/how-i-built-a-tic-tac-toe-game-using-vanilla-javascript-40bh
