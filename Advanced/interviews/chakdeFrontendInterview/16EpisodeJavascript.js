@@ -129,9 +129,22 @@ const obj = {
     },
   },
 };
-getkey(obj, "a.b.c"); //[1,2,3]
-getkey(obj, "a.b.c.0"); //1
-getkey(obj, "a.b.c[1]"); //2
-getkey(obj, ["a", "b", "c", 2]); //3
-getkey(obj, "a.b.c[3]"); //undefined
-getkey(obj, "a.c", "learnWithChirag"); //learnWithChirag
+console.log(getkey(obj, "a.b.c")); //[1,2,3]
+console.log(getkey(obj, "a.b.c.0")); //1
+console.log(getkey(obj, "a.b.c[1]")); //2
+console.log(getkey(obj, ["a", "b", "c", 2])); //3
+console.log(getkey(obj, "a.b.c[3]")); //undefined
+console.log(getkey(obj, "a.c", "learnWithChirag")); //learnWithChirag
+
+function getkey(obj, path, valueIfNotPresent) {
+  if (!Array.isArray(path)) {
+    path = path.replace(/\[([^\]]+)\]/g, ".$1");
+    path = path.split(".");
+  }
+  let currObj = obj;
+  for (const ele of path) {
+    if (!currObj[ele]) return valueIfNotPresent;
+    currObj = currObj[ele];
+  }
+  return currObj;
+}
