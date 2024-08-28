@@ -1,0 +1,17 @@
+Two sorted arrays .Find the number of pairs(i,j) such that A[i]>B[j]
+A=[3,6,8,10,15]
+B=[1,2,7,12,18]
+
+function countGreater(A,B){
+	let count = 0
+  for(let i=0,j=0;i<A.length && j<B.length;){
+  	if(A[i]<B[j])
+    	i++
+    else{
+    	count +=A.length-i
+      j++
+    }
+  }
+  return count
+}
+console.log(countGreater([3,6,8,10,15],[1,2,7,12,18]))
