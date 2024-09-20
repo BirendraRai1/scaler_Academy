@@ -57,28 +57,28 @@ function createGetAPIWithMerging(getAPI) {
         return apiPromise;
     };
 }
-Explanation:
-Cache Structure:
+// Explanation:
+// Cache Structure:
 
-We use a Map to store the cache, where the key is a JSON string of the path and config (this uniquely identifies the API request).
-The value in the cache is an object that contains:
-promise: The in-progress API call's promise.
-timestamp: The time when the API call was made.
-Checking the Cache:
+// We use a Map to store the cache, where the key is a JSON string of the path and config (this uniquely identifies the API request).
+// The value in the cache is an object that contains:
+// promise: The in-progress API call's promise.
+// timestamp: The time when the API call was made.
+// Checking the Cache:
 
-Before making an API call, we check if the cache has an entry for the same path and config.
-If the request is found in the cache and was made within the last 1000ms, the cached promise is returned.
-If the request was made more than 1000ms ago, the cache is cleared, and a new API call is made.
-Handling API Responses:
+// Before making an API call, we check if the cache has an entry for the same path and config.
+// If the request is found in the cache and was made within the last 1000ms, the cached promise is returned.
+// If the request was made more than 1000ms ago, the cache is cleared, and a new API call is made.
+// Handling API Responses:
 
-If the API call resolves, it is removed from the cache after 1000ms using setTimeout.
-If the API call fails, the cache is immediately cleared.
-New API Call:
+// If the API call resolves, it is removed from the cache after 1000ms using setTimeout.
+// If the API call fails, the cache is immediately cleared.
+// New API Call:
 
-If no cached request is found, a new API call is made, and its promise is cached for future calls with the same parameters.
-Usage Example:
-javascript
-Copy code
+// If no cached request is found, a new API call is made, and its promise is cached for future calls with the same parameters.
+// Usage Example:
+// javascript
+// Copy code
 // Assuming getAPI is defined as:
 const getAPI = (path, config) => {
     return new Promise((resolve) => {
@@ -104,17 +104,17 @@ getAPIWithMerging('/list', { keyword: 'engineerChirag' }).then(console.log);
 setTimeout(() => {
     getAPIWithMerging('/list', { keyword: 'learnWithChirag' }).then(console.log);
 }, 1500);
-Expected Output:
-plaintext
-Copy code
-Fetched learnWithChirag from /list
-Fetched learnWithChirag from /list  // This is reused from the first call
-Fetched engineerChirag from /list   // A new API call
-Fetched learnWithChirag from /list  // A new API call after 1000ms
-Summary:
-The createGetAPIWithMerging function avoids unnecessary API calls by caching in-flight requests.
-Identical requests within 1000ms reuse the same promise and return the result without calling the API again.
-After 1000ms, the cache expires, and the API is called again if needed.
+// Expected Output:
+// plaintext
+// Copy code
+// Fetched learnWithChirag from /list
+// Fetched learnWithChirag from /list  // This is reused from the first call
+// Fetched engineerChirag from /list   // A new API call
+// Fetched learnWithChirag from /list  // A new API call after 1000ms
+// Summary:
+// The createGetAPIWithMerging function avoids unnecessary API calls by caching in-flight requests.
+// Identical requests within 1000ms reuse the same promise and return the result without calling the API again.
+// After 1000ms, the cache expires, and the API is called again if needed.
 
 
 
