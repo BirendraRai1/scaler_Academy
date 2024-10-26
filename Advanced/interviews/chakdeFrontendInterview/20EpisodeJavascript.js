@@ -31,6 +31,7 @@ function createGetAPIWithMerging(getAPI) {
 
             // If the call was made within the last 1000ms, return the cached promise
             if (currentTime - timestamp < 1000) {
+                console.log("got without resolving the promise")
                 return promise;
             } else {
                 // If more than 1000ms have passed, remove the cached entry
@@ -42,7 +43,8 @@ function createGetAPIWithMerging(getAPI) {
         const apiPromise = getAPI(path, config)
             .then((result) => {
                 // Once the call is resolved, remove it from cache after 1000ms
-                setTimeout(() => cache.delete(cacheKey), 1000);
+                // setTimeout(() => cache.delete(cacheKey), 1000);
+                console.log("got after resolving the promise")
                 return result;
             })
             .catch((error) => {

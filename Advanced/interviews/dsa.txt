@@ -92,3 +92,42 @@ for(let i=0;i<str.length;i++){
   // console.log("str[i] is",str[i])
 }
 console.log(str2) 
+
+q>Perfect Sum Problem (Print all subsets with given sum)
+
+function printSubSets(arr,target){
+	let result = []
+  print(arr,0,target,0,result,[])
+  return result
+}
+
+function print(arr,sum,target,i,result,newArr){
+	if(i==arr.length){
+        console.log('sum is',sum)
+  	if(sum ==target)
+    	return result.push(newArr)
+    return
+  }
+  sum +=arr[i]
+  newArr.push(arr[i])
+  print(arr,sum,target,i+1,result,[...newArr])
+  sum -=arr[i]
+  newArr.pop()
+  print(arr,sum,target,i+1,result,[...newArr])
+}
+
+console.log(printSubSets([2,3,5,6,8,10],10))
+
+q>print all n digits numbers which can be formed with options
+function printDigits(i,arr,curr,result,n){
+    if(i==n){
+      return result.push(curr)
+    }
+    for(let j=0;j<arr.length;j++){
+			curr[i] = arr[j]
+      printDigits(i+1,arr,[...curr],result,n)
+    }
+  } 
+let result = []
+rintDigits(0,[2,3,7,9],[],result,3)
+console.log(result)

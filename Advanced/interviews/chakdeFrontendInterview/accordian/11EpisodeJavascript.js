@@ -16,7 +16,7 @@ accordionContent.forEach((item, index) => {
       item.querySelector("i").classList.replace("fa-minus", "fa-plus");
     }
     // function to pass the index number of clicked header
-    removeOpenedContent(index);
+  removeOpenedContent(index);
   });
 });
 

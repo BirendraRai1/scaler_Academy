@@ -24,6 +24,13 @@ function calculator() {
   };
 }
 
+/*Purpose: This function is a wrapper that creates a new instance of the calculator object.
+It returns a new instance by calling new calculator(). This allows you to create a new object each time you call computeAmount(), and you can then use the methods defined in the calculator function.
+*Purpose: The calculator function acts like a constructor that sets up a new object when called with new. The this keyword inside the function refers to the newly created object.
+console.log("this inside calculator", this);: This logs the context (this) to the console. When new calculator() is called, this refers to the new instance of the object.
+this.totalAmount = 0;: This initializes the totalAmount property to 0 on the new object
+************/ 
+
 //2nd question
 
 var obj = {
@@ -38,12 +45,12 @@ var obj2 = {
   helloWorld: obj.helloWorld,
   name: "Bye",
 };
-console.log(obj2.helloWorld());
-console.log(obj2.helloWorld.call(obj));
+console.log("calling hellow from obj2",obj2.helloWorld());
+console.log("calling from call",obj2.helloWorld.call(obj));
 
 /*Please create a function model(state,element) to bind state.value to the HTMLInputElement 
 element 
-const input = docum,ent.createElement("input")
+const input = document.createElement("input")
 const state = {value:"Hi"}
 model(state,input)
 console.log(input.value)

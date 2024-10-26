@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+ @import url("https://fonts.go/ogleapis.com/css2?family=Poppins:wght@300&display=swap"); 
 * {
   margin: 0;
   padding: 0;
@@ -21,6 +21,8 @@ body {
   border-radius: 0.5rem;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
+/* .accordion .accordion-content – This is a CSS selector that targets .accordion-content 
+elements that are children of an element with the class .accordion */
 .accordion .accordion-content {
   margin: 10px 0;
   border-radius: 5px;
@@ -28,10 +30,16 @@ body {
   border-color: #bbffaa;
   overflow: hidden;
 }
-
+/* .accordion-content.is-open – This is a CSS selector that targets elements 
+with both the accordion-content class and the is-open class at the same time. 
+This means the rule will only apply if the element has both 
+classes (e.g., <div class="accordion-content is-open">). */
 .accordion-content.is-open {
   padding-bottom: 10px;
 }
+
+/* .accordion-content header – This is a CSS selector that targets the header element inside any element
+ with the accordion-content class (e.g., <div class="accordion-content"><header>...</header></div>). */
 .accordion-content header {
   display: flex;
   min-height: 50px;
@@ -41,6 +49,16 @@ body {
   justify-content: space-between;
   transition: all 0.2s linear;
 }
+
+/* .accordion-content.is-open header – This is a CSS selector that targets the header 
+element inside any element that has both the accordion-content and is-open classes (e.g., <div class="accordion-content is-open"><header>...</header></div>).
+.accordion-content.is-open header – This is a CSS selector that targets the header element 
+inside any element that has both the accordion-content and is-open classes (e.g., <div class="accordion-content is-open"><header>...</header></div>).
+
+min-height: 35px; – This sets the minimum height of the header element to 35 pixels when 
+the accordion is in the open state. The min-height ensures that the header will never be 
+shorter than 35px, though it can grow if the content inside requires more space
+*/
 .accordion-content.is-open header {
   min-height: 35px;
 }
@@ -56,3 +74,13 @@ body {
   font-weight: 400;
   padding: 0 15px;
 }
+
+
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+  This line in CSS is used to import a web font from Google Fonts into your stylesheet. Here's a breakdown
+  @import – This is a CSS rule that allows you to import external stylesheets or fonts.
+url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap") – This is the URL of the Google Fonts service, specifying the font "Poppins".
+family=Poppins – Refers to the font family, in this case, "Poppins".
+wght@300 – This specifies the font weight, 300 in this case (a lighter variant of the font).
+display=swap – This controls how the font is displayed while it is being loaded. Using swap ensures that a fallback font is shown until the custom font is fully loaded
+*/

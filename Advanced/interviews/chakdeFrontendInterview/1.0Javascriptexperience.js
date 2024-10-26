@@ -16,21 +16,35 @@
   */
 let originalArr = [1, 2, 3, 4, 5];
 let result = [];
-let arr1 = [];
 
-function chunk(arr, size) {
-  for (let i = 0; i < arr.length; ) {
-    arr1.length = 0; //here we are initializing arr1.length=0 so that we dont need to create a new array
-    for (let j = i; j < i + size && j < arr.length; j++) {
-      arr1.push(arr[j]);
+// function chunk(arr, size) {
+//   for (let i = 0; i < arr.length; ) {
+//     arr1.length = 0; //here we are initializing arr1.length=0 so that we dont need to create a new array
+//     for (let j = i; j < i + size && j < arr.length; j++) {
+//       arr1.push(arr[j]);
+//     }
+//     i = i + size;
+//     result.push([...arr1]); //here we are using spread operator to push all the elements of arr1
+//   }
+//   return result;
+// }
+
+function chunk(arr,size){
+  for(let i=0;i<arr.length;){
+    let arr1 = []
+    for(let j=0;j<size && i<arr.length;j++){
+      arr1.push(arr[i])
+      i++
     }
-    i = i + size;
-    result.push([...arr1]); //here we are using spread operator to push all the elements of arr1
+    result.push(arr1)
   }
-  return result;
+  return result
 }
 
-console.log(chunk(originalArr, 2));
+console.log(chunk(originalArr, 1));
+console.log("came here")
+//const controller = new AbortController();
+// const signal = controller.signal;
 
 /* create a count function
     count() //1
@@ -44,14 +58,15 @@ console.log(chunk(originalArr, 2));
 
 const count = (() => {
   let counter = 0;
-  function inner() {
+  return function inner() {
     counter++;
     console.log("counter", counter);
+    inner.reset = function () {
+      counter = 0;
+    };
   }
-  inner.reset = function () {
-    counter = 0;
-  };
-  return inner;
+
+  // return inner;
 })();
 //Function.prototype.__proto__==Object.prototype
 
@@ -75,54 +90,54 @@ First, create a debounce function that takes a function (fn) and a delay time (d
 
 javascript
 Copy code*/
-function debounce(fn, delay) {
-  let timeoutId;
-  return function (...args) {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-    timeoutId = setTimeout(() => {
-      fn(...args);
-    }, delay);
-  };
-}
+// function debounce(fn, delay) {
+//   let timeoutId;
+//   return function (...args) {
+//     if (timeoutId) {
+//       clearTimeout(timeoutId);
+//     }
+//     timeoutId = setTimeout(() => {
+//       fn(...args);
+//     }, delay);
+//   };
+// }
 // Step 2: Use AbortController
 //Next, create an abort controller that can be used to abort the operation:
 
 //javascript
 //Copy code
-const controller = new AbortController();
-const signal = controller.signal;
+// const controller = new AbortController();
+// const signal = controller.signal;
 //dev.to/amangupta/optimizing-ux-balancing-debouncing-and-api-call-abortion-3eb9
 
-https: function fetchData(url, signal) {
-  return fetch(url, { signal })
-    .then((response) => response.json())
-    .catch((error) => {
-      if (error.name === "AbortError") {
-        console.log("Fetch aborted");
-      } else {
-        console.error("Fetch error:", error);
-      }
-    });
-}
+// https: function fetchData(url, signal) {
+//   return fetch(url, { signal })
+//     .then((response) => response.json())
+//     .catch((error) => {
+//       if (error.name === "AbortError") {
+//         console.log("Fetch aborted");
+//       } else {
+//         console.error("Fetch error:", error);
+//       }
+//     });
+// }
 //Step 3: Combine Debounce and AbortController
 //Finally, combine the debounce function and the abort controller to create a debounced fetch function that can be cancelled:
 
 //javascript
 //Copy code
-const debouncedFetch = debounce((url) => {
-  controller.abort(); // Abort any previous request
-  controller = new AbortController(); // Create a new controller for the new request
-  fetchData(url, controller.signal);
-}, 300); // 300ms debounce delay
+// const debouncedFetch = debounce((url) => {
+//   controller.abort(); // Abort any previous request
+//   controller = new AbortController(); // Create a new controller for the new request
+//   fetchData(url, controller.signal);
+// }, 300); // 300ms debounce delay
 
-// Example usage
-const input = document.querySelector("input");
-input.addEventListener("input", (event) => {
-  const url = `https://api.example.com/search?q=${event.target.value}`;
-  debouncedFetch(url);
-});
+// // Example usage
+// const input = document.querySelector("input");
+// input.addEventListener("input", (event) => {
+//   const url = `https://api.example.com/search?q=${event.target.value}`;
+//   debouncedFetch(url);
+// });
 //Explanation:
 //Debounce Function: The debounce function ensures that the fetchData function is not called too frequently. It waits for 300 milliseconds after the last call before invoking fetchData.
 //AbortController: Before making a new fetch request, the previous one is aborted by calling controller.abort(). A new AbortController is then created for the new fetch request.

@@ -19,7 +19,7 @@ function validate(str) {
       else return false;
     }
   }
-  return true;
+  return stack.length==0?true:false;
 }
 
-console.log(validate("{[()]}"));
+console.log(validate("{{}"));

@@ -6,7 +6,7 @@ async function fetchWithAutoRetry(fetcher, maximumRetryCount = 1) {
     console.log("maximumRetryCount is", maximumRetryCount);
     try {
       console.log("inside try block ");
-      const result = await fetcher();
+      const result = await fetcher(maximumRetryCount);
       return result;
     } catch (e) {
       console.log("inside catch ", e);
@@ -27,8 +27,10 @@ const p2 = (maximumRetryCount) =>
     // }
 
     //second code
-    if (maximumRetryCount == 1) resolve("resolved p2");
-    else reject("rejected p2");
+    console.log(`maximumRetryCount is ${maximumRetryCount}`)
+    if (maximumRetryCount == 1) 
+      resolve("resolved p2");
+    reject("rejected p2");
   });
 
 (async function a() {

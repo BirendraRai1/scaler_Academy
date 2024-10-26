@@ -1,10 +1,12 @@
 //what will be the output of the following
 // console.log("A");
-// setTimeout(() => console.log("B"))[("C", "D")].forEach((x) => console.log(x));
+// setTimeout(() => console.log("B"))
+// let arr = ["c","d"]
+// arr.forEach((x) => console.log(x));
 // console.log("E");
 
 //There are two callbacks one in the foreach and one in the setTimeout.One executes then
-//and there and other doenot executes then and there
+//and there and other doesnot executes then and there
 /*the answer is it depends where the callback is passed to.In forEach we are iterating over 
 the array so it will not wait for anything.It will execute as soon as the array is given to
 forEach.THe core functionality of setTimeout is to wait .After the wait time is over it executes
@@ -46,6 +48,17 @@ obj.forEach((item) => {
     output[item.key] = [item];
   }
 });
+
+
+//Another Approach
+let result = {}
+for(let i=0;i<obj.length;i++){
+	if(result[obj[i].key])
+  	result[obj[i].key].push(obj[i])    
+  else
+  	result[obj[i].key] = [obj[i]]  
+}
+console.log(result)
 
 console.log("output is", output);
 

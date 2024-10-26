@@ -1,20 +1,21 @@
 //Given an input of array
 //which is made of items with >=3 properties
-let items = [
-  { color: "red", type: "tv", age: 18 },
-  { color: "silver", type: "phone", age: 20 },
-  { color: "blue", type: "book", age: 17 },
-];
+// let items = [
+//   { color: "red", type: "tv", age: 18 },
+//   { color: "silver", type: "phone", age: 20 },
+//   { color: "blue", type: "book", age: 17 },
+// ];
 
 //an exclude array made of key value pair
-const excludes = [
-  { k: "color", v: "silver" },
-  { k: "type", v: "tv" },
-];
+// const excludes = [
+//   { k: "color", v: "silver" },
+//   { k: "type", v: "tv" },
+// ];
 
 // function excludeItems(items, excludes) {
 //   excludes.forEach((pair) => {
 //     items = items.filter((item) => item[pair.k] === pair.v);
+//     console.log(`items is ${items}`)
 //   });
 //   return items;
 // }
@@ -26,12 +27,13 @@ const excludes = [
 //so it returns empty list
 
 //Q2>how we can correct the logic that it prints { color: "blue", type: "book", age: 17 },
-function excludeItems(items, excludes) {
-  excludes.forEach((pair) => {
-    items = items.filter((item) => item[pair.k] !== pair.v);
-  });
-  return items;
-}
+// function excludeItems(items, excludes) {
+//   excludes.forEach((pair) => {
+//     items = items.filter((item) => item[pair.k] !== pair.v);
+//   });
+//   return items;
+// }
+// console.log(excludeItems(items, excludes));
 //but the above approach takes the time complexity O((length of excludes)*(length of items))
 //can we reduce the time complexity
 const item = [
@@ -65,62 +67,62 @@ function excludeItem(item, exclude) {
   return result;
 }
 
-console.log("returning from excludeItem", excludeItem(item, exclude));
+// console.log("returning from excludeItem", excludeItem(item, exclude));
 
 //the above inner for loop can also written with a filter method
-function excludeItems(item, exclude) {
-  const excludeSet = new Set(exclude.map((pair) => `${pair.k}:${pair.v}`));
-  return item.filter((items) => {
-    return !Object.entries(items).some(([key, value]) =>
-      excludeSet.has(`${key}:${value}`)
-    );
-  });
-}
+// function excludeItems(item, exclude) {
+//   const excludeSet = new Set(exclude.map((pair) => `${pair.k}:${pair.v}`));
+//   return item.filter((items) => {
+//     return !Object.entries(items).some(([key, value]) =>
+//       excludeSet.has(`${key}:${value}`)
+//     );
+//   });
+// }
 
 //Q3>Can we use map method instead of set .Implementing the above method using map
-const item1 = [
-  { color: "red", type: "tv", age: 18 },
-  { color: "silver", type: "phone", age: 20 },
-  { color: "blue", type: "book", age: 17 },
-];
+// const item1 = [
+//   { color: "red", type: "tv", age: 18 },
+//   { color: "silver", type: "phone", age: 20 },
+//   { color: "blue", type: "book", age: 17 },
+// ];
 
-const exclude1 = [
-  { k: "color", v: "silver" },
-  { k: "type", v: "tv" },
-];
+// const exclude1 = [
+//   { k: "color", v: "silver" },
+//   { k: "type", v: "tv" },
+// ];
 
-function excludeItems(items, excludes) {
-  const excludeMap = new Map();
+// function excludeItems(items, excludes) {
+//   const excludeMap = new Map();
 
-  // Populate the Map with the excludes
-  for (const { k, v } of excludes) {
-    if (!excludeMap.has(k)) {
-      excludeMap.set(k, new Set());
-    }
-    excludeMap.get(k).add(v);
-  }
+//   // Populate the Map with the excludes
+//   for (const { k, v } of excludes) {
+//     if (!excludeMap.has(k)) {
+//       excludeMap.set(k, new Set());
+//     }
+//     excludeMap.get(k).add(v);
+//   }
 
-  const result = [];
+//   const result = [];
 
-  for (const item of items) {
-    let shouldExclude = false;
+//   for (const item of items) {
+//     let shouldExclude = false;
 
-    for (const [key, value] of Object.entries(item)) {
-      if (excludeMap.has(key) && excludeMap.get(key).has(value)) {
-        shouldExclude = true;
-        break; // Exit inner loop early if a match is found
-      }
-    }
+//     for (const [key, value] of Object.entries(item)) {
+//       if (excludeMap.has(key) && excludeMap.get(key).has(value)) {
+//         shouldExclude = true;
+//         break; // Exit inner loop early if a match is found
+//       }
+//     }
 
-    if (!shouldExclude) {
-      result.push(item);
-    }
-  }
+//     if (!shouldExclude) {
+//       result.push(item);
+//     }
+//   }
 
-  return result;
-}
+//   return result;
+// }
 
-console.log(excludeItems(item1, exclude1)); // [{ color: "blue", type: "book", age: 17 }]
+// console.log(excludeItems(item1, exclude1)); // [{ color: "blue", type: "book", age: 17 }]
 
 const obj = {
   a: {
@@ -139,12 +141,14 @@ console.log(getkey(obj, "a.c", "learnWithChirag")); //learnWithChirag
 function getkey(obj, path, valueIfNotPresent) {
   if (!Array.isArray(path)) {
     path = path.replace(/\[([^\]]+)\]/g, ".$1");
+    console.log(`typeof path is ${typeof path} ${path}`)
     path = path.split(".");
   }
   let currObj = obj;
   for (const ele of path) {
     if (!currObj[ele]) return valueIfNotPresent;
     currObj = currObj[ele];
+   // console.log("currObj is",currObj)
   }
   return currObj;
 }
