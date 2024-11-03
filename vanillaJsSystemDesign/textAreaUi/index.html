@@ -1,0 +1,42 @@
+<!-- Create a Textarea UI with a character limit that updates the character count in real 
+ time. Once the limit is reached, prevent additional input. -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Limit</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Geeks for Geeks</h1>
+        <h3>Character Limit using HTML CSS and Javascript</h3>
+        <textarea class="textarea" id="textarea" placeholder="textarea" maxlength="50"></textarea>
+        <div class="counter-container">
+            <p>Total characters:
+                <span class="total-container" id="total-container">0</span>
+            </p>
+            <p>
+                Remaining characters:
+                <span class="remaining-container" id="remaining-container">50</span>
+            </p>
+        </div>
+        <button class="configure-button" id="configure-button">Configure character limit</button>
+    </div>
+    <div class="modal" id="myModal">
+        <div class="modal-content">
+            <span class="close">X</span>
+            <h2>configure character limit</h2>
+            <label for="new-limit">
+                New Limit:
+            </label>
+            <input type="number" id="new-limit" value="50">
+            <button class="apply-limit-button" id="apply-limit-button">Apply</button>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>

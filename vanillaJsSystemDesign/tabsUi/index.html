@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tabs UI</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="tabs">
+      <div class="tab-buttons">
+        <button class="tab-btn active" onclick="showTab(event, 'tab1')">
+          Tab 1
+        </button>
+        <button class="tab-btn" onclick="showTab(event, 'tab2')">Tab 2</button>
+        <button class="tab-btn" onclick="showTab(event, 'tab3')">Tab 3</button>
+      </div>
+      <div class="tab-content" id="tab1">
+        <h2>Content of Tab 1</h2>
+        <p>This is the content displayed for Tab 1.</p>
+      </div>
+      <div class="tab-content" id="tab2" style="display: none">
+        <h2>Content of Tab 2</h2>
+        <p>This is the content displayed for Tab 2.</p>
+      </div>
+      <div class="tab-content" id="tab3" style="display: none">
+        <h2>Content of Tab 3</h2>
+        <p>This is the content displayed for Tab 3.</p>
+      </div>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>

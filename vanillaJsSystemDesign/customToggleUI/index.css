@@ -1,0 +1,54 @@
+*{
+    box-sizing: border-box;
+}
+
+.toggle-switch {
+    position: relative;
+    width:60px;
+    height: 30px;
+}
+
+/* hide the default checkbox */
+.toggle-input{
+    display: none;
+}
+
+/* toggle background */
+.toggle-label{
+    display: block;
+    background-color: #ccc;
+    width:100%;
+    height: 100%;
+    border-radius: 15px;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+/* circle Knob */
+.toggle-label::before{
+    content:"";
+    position: absolute;
+    height: 26px;
+    width:26px;
+    background-color: white;
+    border-radius: 50%;
+    top:2px;
+    left:2px;
+    transition: transform 0.3s cubic-bezier(0.4 0 0.2 1);
+}
+
+/* when checked - Switch ON state */
+.toggle-input:checked + .toggle-label{
+    background-color: #4caf50;
+}
+
+/* when checked -knob moves to the right */
+.toggle-input:checked + .toggle-label::before{
+    transform: translateX(30px);
+}
+
+/* toggling effect */
+.toggle-label:active::before{
+    width:32px;
+}
