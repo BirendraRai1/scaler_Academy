@@ -8,6 +8,7 @@ function pipe(...funcs){
 //Accepts lists of functions using rest operator
 //Returns a new function to accept 'initialArgument' required
     return async function(initialArgument){
+        console.log("initialArgument is",initialArgument)
         //Initially our result will be the initialArgument
         let result = initialArgument
         //loop through each functions passed in sequence

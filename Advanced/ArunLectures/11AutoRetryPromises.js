@@ -1,9 +1,11 @@
-//Implement a 'fetchWithAutoRetry()' function which will automatically retry to fetch when error
-//occurs until the maximum retry limit is reached
+//Implement a 'fetchWithAutoRetry()' function which will automatically retry to 
+//fetch when error occurs until the maximum retry limit is reached
 
 //Implementation
-//How can we handle the failure case ?? We know that making an api call is always asynchronous
-//and it will return a promise so when the promise gets rejected it means there is a failure
+//How can we handle the failure case ?? We know that making an api call is 
+//always asynchronous
+//and it will return a promise so when the promise gets rejected it means there 
+//is a failure
 //and we need to handle the auto retry logic in the catch block
 
 

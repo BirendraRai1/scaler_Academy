@@ -6,7 +6,7 @@
 //Promise.any() rejects with an Aggregate Error containing all the rejection reasons of the 
 //input promises
 
-PromiseAny = function(input){
+const PromiseAny = function(input){
     const errors = []
     let totalRejected = 0 //counter to keep track if all the promises are rejected
     return new Promise((resolve,reject)=>{

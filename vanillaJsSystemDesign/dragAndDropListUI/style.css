@@ -1,0 +1,49 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .container {
+    width: 300px;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  #draggable-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: white;
+    overflow: hidden;
+  }
+  
+  #draggable-list li {
+    padding: 10px 20px;
+    margin: 0;
+    cursor: grab;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s ease;
+  }
+  
+  #draggable-list li:last-child {
+    border-bottom: none;
+  }
+  
+  #draggable-list li.dragging {
+    background-color: #f0f8ff;
+    opacity: 0.6;
+  }
+  
+  #draggable-list li:hover {
+    background-color: #f9f9f9;
+  }

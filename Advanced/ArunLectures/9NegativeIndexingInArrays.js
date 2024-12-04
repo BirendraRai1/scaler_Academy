@@ -27,7 +27,6 @@ function wrap(arr){
             let index = Number(property)
             if(index<0){
                 index +=target.length
-                return target[index]
             }
             return target[index]
         },
@@ -37,8 +36,6 @@ function wrap(arr){
                 index +=target.length
                 if(index<0)
                     throw new Error('Index out of bound')
-                target[index] = value
-                return true
             }
             target[index] = value
             return true
@@ -50,6 +47,7 @@ let arr = ['a','b','c','d']
 arr = wrap(arr)
 console.log(arr[0])
 console.log(arr[-1])
+console.log(arr[-20])
 arr[-3] = 'z'
 console.log(arr)
 arr[-5] = 'x'

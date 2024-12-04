@@ -1,5 +1,4 @@
 // Write a Custom Hook “useLocalStorage”, to store as well as get data from localStorage API.
-
 import React,{useState} from 'react'
 
 function useLocalStorage(key,initialValue) {

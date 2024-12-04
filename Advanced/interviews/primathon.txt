@@ -6,3 +6,114 @@ can we join two tables in mongodb?
 find the permutations of all the given digits(Backtracking)
 does mongodb follow acid property?
 what are acid properties
+
+
+ans>orders Collection
+{ "_id": 1, "item": "Laptop", "price": 1200, "customer_id": 101 }
+{ "_id": 2, "item": "Phone", "price": 600, "customer_id": 102 }
+{ "_id": 3, "item": "Tablet", "price": 300, "customer_id": 101 }
+
+customer Collection
+{ "_id": 101, "name": "Alice", "age": 30 }
+{ "_id": 102, "name": "Bob", "age": 24 }
+
+$lookup
+To get a list of orders with customer details, you can use $lookup to join orders with 
+customers on the customer_id field.
+
+db.orders.aggregate([
+  {
+    $lookup: {
+      from: "customers",             // Collection to join
+      localField: "customer_id",      // Field from orders collection
+      foreignField: "_id",            // Field from customers collection
+      as: "customer_details"          // Name of the new array field
+    }
+  },
+  {
+    $unwind: "$customer_details"      // Flatten the customer details
+  }
+]);
+
+result
+[
+  {
+    "_id": 1,
+    "item": "Laptop",
+    "price": 1200,
+    "customer_id": 101,
+    "customer_details": { "_id": 101, "name": "Alice", "age": 30 }
+  },
+  {
+    "_id": 2,
+    "item": "Phone",
+    "price": 600,
+    "customer_id": 102,
+    "customer_details": { "_id": 102, "name": "Bob", "age": 24 }
+  },
+  {
+    "_id": 3,
+    "item": "Tablet",
+    "price": 300,
+    "customer_id": 101,
+    "customer_details": { "_id": 101, "name": "Alice", "age": 30 }
+  }
+]
+
+Explaination
+$lookup: This stage joins the orders collection with the customers collection where 
+orders.customer_id matches customers._id.
+$unwind: Since $lookup creates an array field (customer_details) even if there’s 
+only one matching document, $unwind is used to flatten this array, turning it into a single object.
+
+
+what will be the output of this query
+db.orders.aggregate([
+  {
+    $lookup: {
+      from: "customers",             // Collection to join
+      localField: "customer_id",      // Field from orders collection
+      foreignField: "_id",            // Field from customers collection
+      as: "customer_details"          // Name of the new array field
+    }
+  },
+]);
+
+
+result
+[
+  {
+    "_id": 1,
+    "item": "Laptop",
+    "price": 1200,
+    "customer_id": 101,
+    "customer_details": [
+      { "_id": 101, "name": "Alice", "age": 30 }
+    ]
+  },
+  {
+    "_id": 2,
+    "item": "Phone",
+    "price": 600,
+    "customer_id": 102,
+    "customer_details": [
+      { "_id": 102, "name": "Bob", "age": 24 }
+    ]
+  },
+  {
+    "_id": 3,
+    "item": "Tablet",
+    "price": 300,
+    "customer_id": 101,
+    "customer_details": [
+      { "_id": 101, "name": "Alice", "age": 30 }
+    ]
+  },
+  {
+    "_id": 4,
+    "item": "Camera",
+    "price": 750,
+    "customer_id": 999,
+    "customer_details": []
+  }
+]

@@ -1,0 +1,25 @@
+
+1. How would you find the longest substring without repeating characters in a given string?
+2. Given two sorted arrays, how would you merge them without using extra space?
+3. How would you rotate a 2D matrix by 90 degrees clockwise?
+4. How would you find the maximum product subarray in an integer array?
+5. How can you detect a cycle in a linked list?
+6. How would you merge two sorted linked lists?
+7. How would you reverse a linked list?
+8. How would you find the intersection point of two linked lists?
+9. How would you find the lowest common ancestor (LCA) of two nodes in a binary tree?
+10. How would you determine if a binary tree is a valid binary search tree?
+11. Can you traverse a binary tree in level order and in zig-zag level order?
+12. How would you serialize and deserialize a binary tree?
+13. How would you find the longest increasing subsequence in an array?
+14. How would you solve the coin change problem to find the minimum number of coins needed for a given amount?
+15. How would you find the maximum sum of non-adjacent elements in an array?
+16. How would you calculate the minimum edit distance between two strings?
+17. How can you detect a cycle in a directed or undirected graph?
+18. Can you implement Dijkstra’s or Bellman-Ford algorithm to find the shortest path in a graph?
+19. How would you find the number of connected components in an undirected graph?
+20. How would you solve the course schedule problem using topological sorting?
+21. How would you design a scalable URL shortening service?
+22. How would you design a distributed cache system?
+23. How would you design a rate limiter for an API?
+24. How would you design an online marketplace, similar to Amazon or Flipkart? 

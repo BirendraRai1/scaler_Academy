@@ -1,0 +1,109 @@
+//Flatten the below object according to the below conditions
+const obj = {
+    name: "test",
+    address: {
+        personal: "abc",
+        office: {
+            building: "random",
+            street: "some street"
+        }
+    },
+    Phoneno: [123, 456],
+    tags: [
+        [1, 2],
+        [3, 4]
+    ]
+};
+/*{
+  address_office_building: "random",
+  address_office_street: "some street",
+  address_personal: "abc",
+  name: "test",
+  Phoneno_0: 123,
+  Phoneno_1: 456,
+  tags_0_0: 1,
+  tags_0_1: 2,
+  tags_1_0: 3,
+  tags_1_1: 4
+}*/
+
+function flatten(obj){
+	let result = {}
+  for(let keys in obj){
+  if(Array.isArray(obj[keys])){
+      for(let i=0;i<obj[keys].length;i++){
+      if(Array.isArray(obj[keys][i])){
+      	let temp = flatten(obj[keys][i])
+        for(let k=0;k<obj[keys][i].length;k++){
+        	result[`${keys}_${i}_${k}`]=obj[keys][i][k]
+        }
+        }
+        else{
+        	result[`${keys}_${i}`] = obj[keys][i]
+        }
+      }     
+    } 
+    else if(typeof obj[keys] =='object' && obj[keys]!=null){
+    for(let j in obj[keys]){
+    	if(typeof obj[keys][j] =='object' && obj[keys][j]!=null){
+      let temp = flatten(obj[keys][j])
+      for(let k in temp)
+      	result[`${keys}_${j}_${k}`] = temp[k]
+      }
+      else{
+       result[`${keys}_${j}`] = obj[keys][j]
+      }
+    	}
+    }
+    else{
+    	result[keys] = obj[keys]
+    }
+   }
+   return result
+}
+
+console.log(flatten(obj))
+
+q2>what about the performance and optimization in your react application
+ans>read namaste frontend system design
+
+q3>Difference between useMemo and useRef
+
+q4>implement a custom rate limit for 3 counts within 30 seconds
+function rateLimiter() {
+  const callTimestamps = []; // Stores timestamps of API calls
+  const MAX_CALLS = 3;
+  const TIME_WINDOW = 30000; // 30 seconds in milliseconds
+
+  return function count() {
+    const now = Date.now();
+
+    // Remove timestamps that are older than the time window
+    while (callTimestamps.length && now - callTimestamps[0] > TIME_WINDOW) {
+      callTimestamps.shift();
+    }
+
+    // Check if the number of calls in the current window exceeds the limit
+    if (callTimestamps.length >= MAX_CALLS) {
+      throw new Error("You have reached the maximum limit");
+    }
+
+    // Add the current call timestamp
+    callTimestamps.push(now);
+
+    // Make the API request (placeholder comment)
+    console.log("API request made successfully");
+  };
+}
+
+// Usage:
+const limitedApi = rateLimiter();
+
+try {
+  limitedApi(); // Call 1
+  limitedApi(); // Call 2
+  limitedApi(); // Call 3
+  limitedApi(); // Should throw an error
+} catch (error) {
+  console.error(error.message);
+}

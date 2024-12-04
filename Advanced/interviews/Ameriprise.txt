@@ -1,0 +1,22 @@
+Git and Version Control
+ • Git stash: How to retrieve stashed changes?
+ • Git cherry-pick
+
+ JavaScript
+ • Hoisting-related questions
+ • Currying: Infinite sum example like sum(1)(2)(3)(4)()
+ • Microtask vs Macrotask queue
+ • Primitive data types & Symbol data type
+ • Object mutability and array immutability
+
+ ReactJS
+ • Key Hooks: useRef, useMemo vs useCallback, useForwardRef
+ • React protocols
+ • Suspense and fallback
+ • Difference between reference and syntax errors
+
+  Other Important Topics
+ • Shallow copy creation: Object.create vs Object.assign
+ • Temporal dead zone in JavaScript
+ • AWS/CI-CD exposure
+ 

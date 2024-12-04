@@ -6,14 +6,17 @@ function createMySetInterval(){
         function scheduleInterval(){
             intervalMap[id] = setTimeout(()=>{
                 callback(...args)
-                if(intervalMap[id])
+                if(intervalMap[id]){
+                    console.log(`intervalMap[id] is ${intervalMap[id]}`)
                     scheduleInterval()
+                }
+                    
             },delay)
+            console.log(`intervalMap[id] is ${intervalMap[id]} and id is ${id}`)
         }
         scheduleInterval()
         return id
     }
-    
     function myClearInterval(id){
         if(intervalMap[id]){
             clearTimeout(intervalMap[id])
@@ -30,6 +33,6 @@ const startTime = Date.now()
 
 const id1 = mySetInterval(print,1000)
 
-const id2 = mySetInterval(print,2000)
+// const id2 = mySetInterval(print,2000)
 
-setTimeout(()=>myClearInterval(id2),7000)
+// setTimeout(()=>myClearInterval(id2),7000)

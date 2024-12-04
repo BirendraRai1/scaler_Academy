@@ -37,7 +37,8 @@ Classes encapsulate data (properties) and behaviors (methods).
 // console.log(myCar.start())
 
 //Encapsulation
-/*Encapsulation means bundling data and methods that operate on that data within one unit (like a class).
+/*Encapsulation means bundling data and methods that operate on that data within one 
+unit (like a class).
 This is achieved using closures or private fields to hide data.
 Example with a private field (supported from ES2020)
 **********/

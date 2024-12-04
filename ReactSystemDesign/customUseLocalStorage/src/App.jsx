@@ -30,4 +30,10 @@ name contains the value of storedValue (initially set to 'Guest' if 'name' isn't
 localStorage).
 setName is the same as setValue from the hook, allowing you to update name and store it in 
 localStorage.
-**************/ 
+*
+*
+*
+*
+*Write a Custom Hook “useLocalStorage”, to store as well as get data from localStorage API
+*
+********/ 

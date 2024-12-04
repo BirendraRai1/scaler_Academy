@@ -27,3 +27,13 @@ function App() {
 }
 
 export default App
+
+
+/*data &&: This checks if data exists (i.e., it is not null or undefined). If data is falsy,
+ the expression short-circuits, and nothing is rendered.
+data.map(...): If data is an array, the .map() method iterates over each element in the 
+array and creates an <li> element for every item.
+*
+*
+*
+******/ 

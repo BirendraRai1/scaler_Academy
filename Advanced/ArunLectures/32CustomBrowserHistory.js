@@ -44,3 +44,27 @@ browserHistory.visit("https://twitter.com");
 console.log(browserHistory.back());
 
 console.log(browserHistory.forward());
+
+class BrowserHistory{
+    constructor(url){
+        this.history = []
+        this.current = -1
+        if(url){
+            this.history.push(url)
+            this.current++
+        }
+    }
+    visit(url){
+        this.history = this.history.slice(0,this.current+1)
+        this.history.push(url)
+        this.current++
+    }
+    back(){
+        this.current = Math.max(0,this.current-1)
+        return this.history[this.current]
+    }
+    forward(){
+        this.current = Math.min(this.history.length-1,this.current+1)
+        return this.history[this.current]
+    }
+}

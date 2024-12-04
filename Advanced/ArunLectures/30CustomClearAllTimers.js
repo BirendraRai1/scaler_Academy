@@ -21,6 +21,7 @@
 )()
 
 const startTime = Date.now()
+console.log("window is",window)
 const print = ()=>console.log(`Timer executed after ${Date.now()-startTime}ms`)
 setTimeout(print,750)
 setTimeout(print,1000)

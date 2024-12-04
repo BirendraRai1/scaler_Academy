@@ -12,16 +12,14 @@ let details = [{
     "fullName": "E-4",
     "age": 24
 }];
-let arr =[]
 1.Answer>for(let i=0;i<details.length;i++){
-	let obj={}
-  for(let keys in details[i]){
-  if(keys=="fullName")
-  	obj.name = details[i][keys]
-  else
-  	obj[keys]=details[i][keys]
+	let obj = details[i]
+  for(let key in obj){
+  	if(key =='fullName'){
+    	obj.name = obj[key]
+      delete obj[key]
+    }
   }
-  arr.push(obj)
 }
 
 2.Answer>for(let i=0;i<details.length;i++){
@@ -52,10 +50,11 @@ ans1>let newArray = []
     }
     console.log(newArray)
 
-ans2>let modifiedBooks = books.map(JSON.stringify)
-     let newSetOfBooks = new Set(modifiedBooks)
-     let uniqueBooks = Array.from(newSetOfBooks).map(JSON.parse)
-     console.log(uniqueBooks)
+ans2>let set = new Set()
+        for(let i=0;i<books.length;i++){
+            set.add(JSON.stringify(books[i]))
+        }
+        console.log(Array.from(set).map(JSON.parse))
 
 ans3>let ids = books.map(({title})=>title)
      console.log(ids)

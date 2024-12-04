@@ -1,25 +1,47 @@
 //Validate("{}[]()"); //true
 //Validate("{[()]}"); //true
 //Validate("{[}]"); //false last '}' is not paired with '{'
-function validate(str) {
-  let stack = [];
-  for (let i = 0; i < str.length; i++) {
-    if (str[i] == "(" || str[i] == "{" || str[i] == "[") stack.push(str[i]);
-    else if (str[i] == "}") {
-      let curr = stack.pop();
-      if (curr == "{") continue;
-      else return false;
-    } else if (str[i] == "]") {
-      let curr = stack.pop();
-      if (curr == "[") continue;
-      else return false;
-    } else if (str[i] == ")") {
-      let curr = stack.pop();
-      if (curr == "(") continue;
-      else return false;
-    }
+function isParenthesisBalanced(s) {
+  // code here
+  let stack = []
+  let flag = false
+  for(let i=0;i<s.length;i++){
+      if(s[i]=='{' || s[i]=='(' ||s[i]=='[')
+          stack.push(s[i])
+      else if(s[i]==')'){
+          if(stack.length && stack[stack.length-1]=='('){
+              stack.pop()
+              continue
+          }
+          else{
+              flag = true
+              break
+          }
+      }
+      else if(s[i]=='}'){
+          if(stack.length && stack[stack.length-1]=='{'){
+              stack.pop()
+              continue
+          }
+          else{
+              flag = true
+              break
+          }
+      }
+      else if(s[i]==']'){
+          if(stack.length && stack[stack.length-1]=='['){
+              stack.pop()
+              continue
+          }
+          else{
+              flag = true
+              break
+          }
+      }
   }
-  return stack.length==0?true:false;
+  if(stack.length || flag==true)
+      return false
+  return true
 }
 
-console.log(validate("{{}"));
+console.log(isParenthesisBalanced("{{}"));

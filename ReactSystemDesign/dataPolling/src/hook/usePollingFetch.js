@@ -30,7 +30,8 @@ function usePollingFetch(url,interval=5000){
 export default usePollingFetch
 
 
-/*Data polling is a technique where a system repeatedly requests updated data from a server
+/* I implemented Data polling technique where a system repeatedly requests updated data 
+from a server
  or API at regular intervals. This approach allows applications to stay updated with the 
  latest information, making it useful for real-time applications like dashboards, social 
  feeds, or any system that benefits from constant data refreshes

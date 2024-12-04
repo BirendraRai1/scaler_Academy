@@ -21,3 +21,9 @@ function App() {
 }
 
 export default App
+
+/*Create a custom hook “useFetch” that fetches data from an API endpoint and handles 
+the loading, error, and success states
+*
+*
+*******/ 

@@ -6,6 +6,7 @@ function memoize(mainFn,resolver){
     const cache = {}
     return function(...args){
         const key = resolver?resolver(...args):args[0]
+        console.log(`key is`,key)
         if(cache.hasOwnProperty(key)){
             console.log("returning the result from cache")
             return cache[key]

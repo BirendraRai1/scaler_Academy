@@ -6,14 +6,14 @@
 function flatten(arr,depth=1){
     if(depth==0)
         return arr
-    const result = []
+    let result = []
     for(let i=0;i<arr.length;i++){
         if(Array.isArray(arr[i])){
             const flattenedArr = flatten(arr[i],depth-1)
-            result.push(...flattenedArr)
+            result = [...result,...flattenedArr]
         }
         else
-            result.push(arr[i])
+            result = [...result,arr[i]]
     }
     return result
 }

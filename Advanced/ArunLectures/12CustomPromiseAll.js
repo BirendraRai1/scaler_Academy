@@ -9,7 +9,7 @@
 //of a promise needs to be mapped in the output array exactly to the index to that of the promise
 //in the input array
 
-PromiseAll = function(input){
+const PromiseAll = function(input){
     console.log("Entere here")
     //result arr to store the result of each promise
     const result = []
@@ -34,17 +34,17 @@ PromiseAll = function(input){
 }
 
 
-// const promise3 = PromiseAll([Promise.resolve(1),
-//     new Promise((resolve, reject) => setTimeout(() => reject(2),
-// 0)),
-// new Promise((resolve) => setTimeout(() => resolve(3), 2000)),
-// Promise.reject(4),
-// Promise.reject(5)
-// ])
+const promise3 = PromiseAll([Promise.resolve(1),
+    new Promise((resolve, reject) => setTimeout(() => reject(2),
+0)),
+new Promise((resolve) => setTimeout(() => resolve(3), 2000)),
+Promise.reject(4),
+Promise.reject(5)
+])
 
-// promise3
-// .then(value => console.log('Resolved with 3', value))
-// .catch(value => console.log('Rejected with 3', value))
+promise3
+.then(value => console.log('Resolved with 3', value))
+.catch(value => console.log('Rejected with 3', value))
 
 
 // const promise4 = Promise.all([
