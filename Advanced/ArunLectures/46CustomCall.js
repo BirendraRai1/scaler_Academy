@@ -11,7 +11,8 @@ let ironMan = {
   team: "Iron Man",
 };
 
-Function.prototype.myCall = function (requiredObj, ...args) {
+Function.prototype.myCall = function(requiredObj, ...args) {
+  console.log("this inside myCall is",this)
   let requiredFn = this;
   requiredObj.requiredFn = requiredFn;
   requiredObj.requiredFn(...args);

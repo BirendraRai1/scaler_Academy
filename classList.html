@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClassList</title>
+</head>
+<body>
+    <div id="myDiv" class="box shadow"></div>
+    <script>
+        const div = document.querySelector("#myDiv")
+        div.classList.add("active","rounded")
+        div.classList.remove("shadow")
+        div.classList.toggle("hidden")
+        console.log(div.classList.contains("rounded"))
+        div.classList.replace("rounded","circle")
+        console.log(div.classList.value)
+        console.log(div.classList.length)
+    </script>
+</body>
+</html>

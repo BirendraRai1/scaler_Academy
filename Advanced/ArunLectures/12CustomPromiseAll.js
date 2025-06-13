@@ -19,17 +19,17 @@ const PromiseAll = function(input){
         //If empty arr we can immediately resolve with []
         if(input.length==0)
             return resolve(result)
-        input.forEach((item,index)=>{
+        for(let i=0;i<input.length;i++){
         //we need to wrap each elem in Promise.resolve().Since each elem can be any value other than a promise as well 
-            Promise.resolve(item)
+            Promise.resolve(input[i])
             .then((value)=>{
-                result[index] = value
+                result[i] = value
                 totalResolved++
                 if(totalResolved ==input.length)
                     resolve(result)
             })
             .catch((err)=>reject(err))
-        })
+        }
     })
 }
 

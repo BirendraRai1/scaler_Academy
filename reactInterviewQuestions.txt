@@ -1,0 +1,29 @@
+1>Explain the concept of virtual DOM , Shadow DOM in reactjs:-
+ans:>The Virtual DOM is a lightweight copy of the Real DOM (Document Object Model) that 
+     React uses to optimize UI updates. It is  designed to improve performance and simplify
+      UI updates by avoiding direct manipulation of the real DOM.
+    Shadow DOM:-The Shadow DOM is a browser technology that allows developers to encapsulate 
+    the DOM and style of a component. It is used in Web Components to create isolated 
+    components with their own DOM tree.
+
+
+2>What is a Higher order Component? Explain with examples.
+ans:>A higher order component is an advanced react pattern for reusing component logic.It is a 
+     function that takes a component as an input and returns a new component with added functionality
+     Higher order components are used for tasks like authentication ,logging without duplicating codes
+     for example refer to ReactSystemDesign
+
+3>what are the different react design patterns?
+ans:>React design patterns help in writing clean,maintainable and scalable code .Below are some 
+     widely used react design patterns:
+     a:- Presentational and container components
+          1:-Presentational components:-Focus on how things look(UI),receive data via props and have no direct state management
+             logic
+          2:-Container components:-Focus on how things work,manage state handle logic and provide data to the presentational components
+          eg:ToDo
+     b:Higher order component
+     c:-custom hook
+     d:-controlled and uncontrolled component
+     e:-context api for state sharing
+          
+

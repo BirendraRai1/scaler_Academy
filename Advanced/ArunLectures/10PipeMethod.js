@@ -12,9 +12,10 @@ function pipe(...funcs){
         //Initially our result will be the initialArgument
         let result = initialArgument
         //loop through each functions passed in sequence
-        for(let fn of funcs){
+        for(let i=0;i<funcs.length;i++){
         //update result since output of one func will be the input for other func
-            result = await Promise.resolve(fn(result))
+            result = await funcs[i](result)
+            console.log("result is",result)
         }
         return result
     }

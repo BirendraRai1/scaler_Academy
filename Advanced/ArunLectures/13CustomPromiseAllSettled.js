@@ -9,27 +9,26 @@
 
 
 
-PromiseAllSettled = function(input){
+const PromiseAllSettled = function(input){
     const result = []
     let totalSettled = 0 //counter to track if all the promises are settled
+    let n = input.length
     return new Promise((resolve,reject)=>{
-        if(input.length==0)
-            return resolve(result)
-        input.forEach((item,index)=>{
-            Promise.resolve(item)
+        for(let i=0;i<input.length;i++){
+            Promise.resolve(input[i])
             .then((value)=>{
-                result[index] = {status:'fulfilled',value}
-                totalSettled++
-                if(totalSettled==input.length)
-                        resolve(result)
+                result[i] = {status:'fulfilled',value}
             })
             .catch((err)=>{
-                result[index] ={status:'rejected',err}
-                totalSettled++
-                if(totalSettled==input.length)
-                    resolve(result)
+                result[i] ={status:'rejected',err}
             })
-        })
+            .finally(()=>{
+                totalSettled++
+                if(totalSettled==input.length){
+                    resolve(result)
+                }
+            })
+        }
     })
 }
 
@@ -70,16 +69,16 @@ PromiseAllSettled = function(input){
 //     .then(value => console.log('Resolved with', value))
 //     .catch(value => console.log('Rejected with', value))
 
-// const promise4 = PromiseAllSettled([
-//     null,
-//     undefined,
-//     new Promise((resolve) => setTimeout(() => resolve(2), 350)),
-//     {},
-//     'Hello'
-//     ])
-// promise4
-//     .then(value => console.log('Resolved with', value))
-//     .catch(value => console.log('Rejected with', value))
+const promise4 = PromiseAllSettled([
+    null,
+    undefined,
+    new Promise((resolve) => setTimeout(() => resolve(2), 350)),
+    {},
+    'Hello'
+    ])
+promise4
+    .then(value => console.log('Resolved with', value))
+    .catch(value => console.log('Rejected with', value))
 
 const promise5 = PromiseAllSettled([])
 promise5

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import useLocalStorage from "./hooks/useLocalStorage";
-console.log("useLocalStorage is",useLocalStorage)
 import "./App.css";
 
 function App() {

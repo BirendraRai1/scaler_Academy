@@ -106,7 +106,7 @@ called, will execute uploadFunction(item)
     let nextAPIBatch = 0;
   
     return new Promise((resolve, reject) => {
-      (function fetchAPIcalls() {
+      function fetchAPIcalls() {
         const start = nextAPIBatch;
         const end = nextAPIBatch + max;
         const nextAPICallsToMake = funcsArr.slice(start, end);
@@ -126,15 +126,17 @@ called, will execute uploadFunction(item)
             }
           })
           .catch((error) => reject(error));
-      })();
+      };
+      fetchAPIcalls()
     });
   }
   
   // Running the throttling upload process
-  const dataArray = Array.from({ length: 50 }, (_, i) => `Product ${i + 1}`);
-  console.log('dataArray is',dataArray)
+ const dataArray = new Array(50).fill(50).map((i,index)=>`Product ${index+1}`) 
+ //console.log('dataArray is',dataArray)
   const maxConcurrentUploads = 5; // Limit of 5 uploads at once
   const uploadFunctions = createUploadFunctions(dataArray);
+  console.log("uploadFunctions",uploadFunctions)
   
   throttlePromises(uploadFunctions, maxConcurrentUploads)
     .then((results) => console.log("All uploads completed:", results))

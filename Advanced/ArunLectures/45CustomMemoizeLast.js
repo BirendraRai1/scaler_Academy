@@ -4,11 +4,11 @@ function memoizeLast(mainFn,isArgsEqual=defaultIsArgsEqual){
     return function(...args){
         // Check if the lastArgs and current args are equal
         if(isArgsEqual(args,lastArgs)){
-            console.log("getting the result from cache")
+            console.log("getting the result from cache",...args," ",lastArgs)
             return lastResult
         }
         else{
-            console.log("getting the result from calculation")
+            console.log("getting the result from calculation",...args)
             //const result = mainFn.call(this,...args)
             const result = mainFn(...args)
             lastResult = result
@@ -19,16 +19,13 @@ function memoizeLast(mainFn,isArgsEqual=defaultIsArgsEqual){
 }
 
 const defaultIsArgsEqual = (args1,args2)=>{
-    let isEqual = true
     if(args1.length !== args2.length)
-        isEqual = false
-    else{
-        args1.forEach((value,index)=>{
-            if(isEqual && value !== args2[index])
-                isEqual = false
-        })
+        return false
+    for(let i=0;i<args1.length;i++){
+        if(args1[i]!= args2[i])
+            return false
     }
-    return isEqual
+    return true
 }
 
 function sum(a,b,c){

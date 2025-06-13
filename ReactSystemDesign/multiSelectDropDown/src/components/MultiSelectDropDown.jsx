@@ -20,30 +20,31 @@ function MultiSelectDropDown({ options }) {
   }
 
   function toggleSelect(item){
-    if(selected.includes(item)){
-      setSelected(selected.filter((i)=>i !=item))
-    }
-    else{
-      setSelected([...selected,item])
-    }
+    // if(selected.includes(item)){
+    //   setSelected(selected.filter((i)=>i !=item))
+    // }
+    // else{
+    //   setSelected([...selected,item])
+    // }
+    setSelected([...selected,item])
   }
 
 
   return (
-    <div className="dropDown">
+    <div >
       {/* selected Items display */}
-      <div className="selected-items">
+      <div >
         {selected.map((item) => (
-          <div key={item} className="selected-item">
+          <div key={item} >
             {item}{" "}
-            <span className="remove-btn" onClick={() => removeSelected(item)}>
-              &times
+            <span onClick={() => removeSelected(item)}>
+              X
             </span>
           </div>
         ))}
       </div>
       {/* search and toggle */}
-      <div className="dropdown-header" onClick={toggleDropdown}>
+      <div onClick={toggleDropdown}>
         <input 
           type="text"
           placeholder="Search or select...."
@@ -51,17 +52,16 @@ function MultiSelectDropDown({ options }) {
           onChange={(e)=>setSearch(e.target.value)}
           onClick={(e)=>e.stopPropagation}
           />
-          <span className="arrow">{isOpen ? "▲" : "▼"}</span>
+          <span>{isOpen ? "▲" : "▼"}</span>
       </div>
       {/* DropDown options */}
       {
         isOpen && (
-          <div className="dropdown-options">
+          <div>
             {
               filteredOptions.map((item)=>(
                 <div
                 key={item}
-                className={`dropdown-item ${selected.includes(item)?"selected":""}`}
                 onClick={()=>toggleSelect(item)}
                 >
                   {item}

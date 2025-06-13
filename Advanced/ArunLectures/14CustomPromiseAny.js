@@ -11,19 +11,19 @@ const PromiseAny = function(input){
     let totalRejected = 0 //counter to keep track if all the promises are rejected
     return new Promise((resolve,reject)=>{
         if(input.length==0)
-            return reject(new AggregateError(errors,'Empty Array'))
-        input.forEach((item,index)=>{
-            Promise.resolve(item)
+            return reject(new AggregateError([],'All Promises were Rejected'))
+        for(let i=0;i<input.length;i++){
+            Promise.resolve(input[i])
             .then((value)=>{
                 resolve(value)
             })
             .catch((err)=>{
-                errors[index] = err
+                errors[i] = err
                 totalRejected++
                 if(totalRejected == input.length)
                     reject(new AggregateError(errors,'All promise rejected'))
             })
-        })
+        }
     })
 }
 
@@ -31,7 +31,7 @@ const PromiseAny = function(input){
 //     Promise.reject(1),
 //     new Promise((resolve) => setTimeout(() => resolve(2), 2000)),
 //     Promise.reject(3),
-//     Promise.reject(4)
+//     Promise.resolve(4)
 //     ])
 // promise1
 //     .then(value => console.log('Resolved with', value))
@@ -52,15 +52,15 @@ const PromiseAny = function(input){
 //     .catch(value => console.log('Rejected with', value))
 
 
-// const promise3 = PromiseAny([
-//     Promise.reject(1),
-//     new Promise((_, reject) => setTimeout(() => reject(2), 0)),
-//     Promise.reject(3),
-//     Promise.reject(4)
-//     ])
-// promise3
-//     .then(value => console.log('Resolved with', value))
-//     .catch(value => console.log('Rejected with', value))
+const promise3 = PromiseAny([
+    Promise.reject(1),
+    new Promise((_, reject) => setTimeout(() => reject(2), 0)),
+    Promise.reject(3),
+    Promise.reject(4)
+    ])
+promise3
+    .then(value => console.log('Resolved with', value))
+    .catch(value => console.log('Rejected with', value))
 
 
 // const promise4 = PromiseAny([

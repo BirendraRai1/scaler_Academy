@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "./App.css";
+import ListItems from "../components/ListItems";
+import RemoveItems from "../components/RemoveItems";
 
 const items = [
   { id: 1, name: "Apple" },
@@ -78,7 +80,7 @@ If it doesn't exist, initialize it with count: 1
   function removeFromCart(itemId) {
     setCart((prevCart) => {
       console.log("prevCart is",prevCart)
-      const updatedCart = { ...prevCart };
+      let updatedCart = { ...prevCart };
       if (updatedCart[itemId]?.count > 1) {
         updatedCart[itemId] = {
           ...updatedCart[itemId], // Ensure immutability
@@ -100,14 +102,7 @@ If it doesn't exist, initialize it with count: 1
         {/* Item List */}
         <div>
           <h2>Items</h2>
-          <ul>
-            {items.map((item) => (
-              <li key={item.id}>
-                {item.name}
-                <button onClick={() => addToCart(item)}>Add</button>
-              </li>
-            ))}
-          </ul>
+          <ListItems items={items} transferfn={addToCart}/>
         </div>
 
         {/* Cart */}

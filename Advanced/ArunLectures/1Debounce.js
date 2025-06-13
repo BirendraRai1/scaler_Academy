@@ -14,23 +14,18 @@ const debounce = (mainFunction, delay) => {
 };
 
 // Initialize startTime. We use this to cross-check debouncedFn
-let startTime = Date.now();
+const fn = debounce((message) => {
+  console.log(message);
+}, 300);
 
-const fetchData = () => {
-  console.log(`fetchData called after ${Date.now() - startTime}ms`);
-};
-const debouncedFn = debounce(fetchData, 50);
-
-//Input1
-// setTimeout(debouncedFn, 30);
-// setTimeout(debouncedFn, 40);
+fn("Hello");
+fn("Hello, World!");
+fn("Debounced!");
 
 
-setTimeout(debouncedFn, 30);
-setTimeout(debouncedFn, 40);
-setTimeout(debouncedFn, 100);
-setTimeout(debouncedFn, 160);
-setTimeout(debouncedFn, 170);
+setTimeout(() => {
+  fn("Debounced twice");
+}, 400);
 
 /*Debouncing is a way of delaying the execution of a
 function until a certain amount of time has passed since the

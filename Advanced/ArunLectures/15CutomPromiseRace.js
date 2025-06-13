@@ -3,11 +3,11 @@
 
 PromiseRace = function(input){
     return new Promise((resolve,reject)=>{
-        input.forEach((item,index)=>{
-            Promise.resolve(item)
+        for(let i=0;i<input.length;i++){
+            Promise.resolve(input[i])
             .then((value)=>resolve(value))
             .catch((err)=>reject(err))
-        })
+        }
     })
 }
 

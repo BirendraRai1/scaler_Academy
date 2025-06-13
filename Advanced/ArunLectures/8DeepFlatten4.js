@@ -57,4 +57,4 @@ const input2 = [
     },
   },
 ];
-console.log(flatten(input2));
+console.log(flatten(input1));
