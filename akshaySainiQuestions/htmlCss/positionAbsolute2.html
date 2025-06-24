@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .parent-relative {
+      width: 400px;
+      height: 200px;
+      background-color: #f0f0f0;
+      border: 2px solid green;
+      position: relative; /* This makes it the positioning context */
+      margin: 50px;
+    }
+
+    .child-absolute {
+      width: 100px;
+      height: 100px;
+      background-color: gold;
+      border: 1px solid orange;
+      position: absolute; /* Make it absolutely positioned */
+      top: 20px; /* 20px from the top of its *relative* parent */
+      left: 30px; /* 30px from the left of its *relative* parent */
+    }
+
+    .another-element {
+      width: 150px;
+      height: 50px;
+      background-color: lightsteelblue;
+      border: 1px solid navy;
+      margin-top: 20px; /* This will appear below the parent-relative box */
+    }
+  </style>
+  <body>
+    <div class="parent-relative">
+      Parent (position: relative)
+      <div class="child-absolute">Child (position: absolute)</div>
+    </div>
+
+    <div class="another-element">Another Element</div>
+  </body>
+</html>
+
+<!-- When you set an element to position: absolute;, it means:
+
+It's removed from the normal document flow. This is the biggest difference from relative. When an element is absolute, it no longer takes up any space where it was originally placed. 
+Other elements will collapse and fill its original spot.
+
+It's positioned "relative to its closest positioned ancestor." This is critical.
+
+If no ancestor has position: relative, absolute, fixed, or sticky, then the absolute element will 
+position itself relative to the initial containing block (usually the <body> or <html> element).
+
+If an ancestor does have a position value other than static (most commonly relative), then the 
+absolute element will position itself relative to that ancestor's padded edge.
+
+You must use top, right, bottom, and left to place it. Without these properties, an absolutely 
+positioned element will appear where it would have if it were static, but still without affecting the 
+flow. -->
+
+
+<!-- The "Child (position: absolute)" box would be placed 20px from the top and 30px from the left of its parent (.parent-relative). The "Parent" box would still occupy its normal space. The "Another Element" would appear after the 
+ "Parent" box, completely unaffected by the "Child (position: absolute)" box, because the child
+  was removed from the flow -->

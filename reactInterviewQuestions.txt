@@ -25,5 +25,52 @@ ans:>React design patterns help in writing clean,maintainable and scalable code 
      c:-custom hook
      d:-controlled and uncontrolled component
      e:-context api for state sharing
+
+4>how to use react testing library and jest?
+
+5>const incrementHandler = () => {
+ setCount(count + 5);
+ setCount(count + 5);
+ setCount(count + 5);
+ console.log(count);
+};
+
+Then I asked:
+
+❓ What will console.log(count) print?
+ ❓ What will be the updated count value on the UI?
+
+Most candidates answered 15.
+ But guess what?
+👇 The real answer:
+console.log(count) → 0
+UI shows → 5
+Here’s why:
+
+useState updates are asynchronous.
+React batches state updates.
+
+All three calls use the same stale value of count.
+✅ To make it work correctly:
+
+setCount(prev => prev + 5);
+setCount(prev => prev + 5);
+setCount(prev => prev + 5);
+
+Now the final state will be 15, as expected.
+
+
+
+Q>const arr =[1,2,3,4]
+const results = new Array(arr.length)
+for(let i=0;i<arr.length;i++){
+    results.push(arr[i])
+}
+console.log(results.length)
+
+Q>difference betwwen null and undefined
+Q>what is callback hell
+Q>what is promises
+Q>what is symbol in javascript
           
 

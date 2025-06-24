@@ -1,2 +1,460 @@
 difference between concurrency and parallelism
 ans>concurrency switches between multiple tasks while parallelism is multiple tasks executed simultaneously
+
+what happens to the latency when we store s3 buket url in mongodb and how to improve it
+ans>Latency Impact of Storing S3 URLs in MongoDB
+When storing S3 bucket URLs (e.g., https://my-bucket.s3.amazonaws.com/object-key) in MongoDB:
+
+Minimal MongoDB Latency:
+
+Fetching a URL string from MongoDB is fast (sub-millisecond) if the query uses an indexed field.
+
+Writes are also efficient as URLs are small strings.
+
+Real Latency Comes from S3 Access:
+
+The primary latency occurs when your application accesses the S3 URL to read/download the object.
+
+This involves:
+
+DNS resolution for s3.amazonaws.com.
+
+Network round-trip time (RTT) to AWS S3.
+
+Time to transfer the object (scales with object size).
+
+Typical Bottlenecks:
+
+Network latency: Distance between your app server and the S3 bucket region.
+
+S3 object size: Larger files (e.g., videos) increase transfer time.
+
+Concurrent requests: High load on S3 or your app.
+
+DNS/cold starts: First request may be slower.
+
+How to Improve Latency
+1. Optimize S3 Access
+Use CloudFront in Front of S3:
+
+Cache objects at AWS edge locations. Reduces latency by serving content from locations closer to users.
+
+Use cache TTLs (e.g., 24 hours) for static content.
+
+Enable S3 Transfer Acceleration:
+
+Uses CloudFront’s backbone network for faster uploads/downloads (ideal for global users).
+
+Choose the Correct S3 Storage Class:
+
+Use STANDARD for frequently accessed objects. Avoid GLACIER for low-latency needs.
+
+2. Optimize MongoDB Usage
+Index the URL Field:
+
+javascript
+db.collection.createIndex({ s3Url: 1 }); // Speeds up URL lookup queries.
+Project Only Essential Fields:
+Retrieve only the URL (not entire documents):
+
+javascript
+db.collection.find({ _id: 123 }, { s3Url: 1, _id: 0 });  
+3. Application-Level Caching
+Cache S3 Objects:
+
+Use Redis/Memcached to store frequently accessed objects (or their compressed versions).
+
+Cache signed URLs (if using temporary URLs) for 5-15 minutes to avoid regeneration.
+
+Prefetch Objects:
+
+Load anticipated objects during low-traffic periods.
+
+4. Parallelize & Compress
+Parallel Downloads:
+
+For large files, use S3’s multipart download (split into parts).
+
+Compress Objects:
+
+Serve compressed formats (e.g., WebP for images, gzip for JSON).
+
+5. Other Best Practices
+Keep Bucket Region Close:
+Deploy app servers in the same AWS region as the S3 bucket.
+
+Use HTTP/2 or HTTP/3:
+Reduces connection overhead for multiple requests.
+
+Asynchronous Processing:
+For non-critical operations (e.g., image thumbnailing), queue S3 downloads.
+
+Architectural Recommendations
+Store Keys, Not Full URLs:
+Save only the S3 object key (e.g., images/cat.jpg) in MongoDB. Construct URLs dynamically:
+
+python
+# Python example
+s3_url = f"https://{bucket}.s3.{region}.amazonaws.com/{object_key}"
+Benefits: Avoids URL updates if bucket/region changes.
+
+Use Presigned URLs for Secure Access:
+Generate short-lived presigned URLs on-demand:
+
+Summary
+MongoDB isn’t the bottleneck – S3 access and network are.
+
+Do: Use CloudFront, cache aggressively, index MongoDB, and keep data close.
+
+Avoid: Storing full URLs (use object keys), downloading large objects repeatedly.
+
+By implementing these optimizations, you can reduce end-to-end latency by 50–90% for frequent access patterns.
+
+Q3>function asyncOperation(value,callback){
+  setTimeout(()=>{
+    console.log(value)
+    callback(value*2)
+  },Math.random()*1000)
+}
+
+function processArray(array,index){
+  if(index<array.length){
+    asyncOperation(array[index],(result)=>{
+      processArray(array,result)
+    })
+  }
+}
+const inputArray = [1,2,3,4]
+processArray(inputArray,0)
+console.log("Done")
+
+q4>function asyncOperation(value,callback){
+  setTimeout(()=>{
+    console.log(value)
+    callback(value*2)
+  },Math.random()*1000)
+}
+
+function processArray(array,index){
+  if(index<array.length){
+    asyncOperation(array[index],(index)=>{
+      processArray(array,result)
+    })
+  }
+}
+const inputArray = [1,2,3,4]
+processArray(inputArray,0)
+console.log("Done")
+
+
+q5>const obj = {
+  a: this,
+  b: function(){
+    return this;
+  },
+  c: ()=>{
+    return this;
+  },
+  d(){
+    return this;
+  }, 
+  e: function(){
+    return this.a;
+  }
+}
+console.log("a is",obj.a)
+console.log("b is",obj.b())
+console.log("c is",obj.c())
+console.log("d is",obj.d())
+console.log("e is",obj.e())
+
+ans>obj.a: this
+this refers to the global object (window in browsers) because it's in the top-level context.
+
+obj.b: function() { return this; }
+As a regular function method, this refers to the object calling it (obj).
+
+obj.c: () => { return this; }
+Arrow functions inherit this from their lexical scope (global scope here), so this is the global object.
+
+obj.d() { return this; }
+Shorthand method syntax behaves like a regular function. this refers to obj.
+
+obj.e: function() { return this.a; }
+Regular function method, so this is obj. Thus, this.a is obj.a (the global object).
+
+
+Q4>Go through what is Object.entries()
+
+
+
+Persistent Systems
+I. Core Node.js Concepts:
+
+Event Loop:
+
+Explain the Node.js Event Loop in detail.
+
+Differentiate between process.nextTick(), setImmediate(), and setTimeout(fn, 0). When would you use each?
+
+How does Node.js handle concurrency with its single-threaded nature?
+
+Asynchronous Programming:
+
+Explain Promises, async/await. What are their advantages over callbacks?
+
+What is "callback hell" and how do you avoid it?
+
+How do you handle errors in asynchronous Node.js code?
+
+Modules:
+
+Explain module.exports and require().
+
+What are the differences between CommonJS and ES6 modules in Node.js?
+
+Streams and Buffers:
+
+What are Node.js Streams? Explain different types (Readable, Writable, Duplex, Transform) and their use cases.
+
+When would you use Buffers in Node.js?
+
+Event Emitter:
+
+What is EventEmitter and how do you use it?
+
+Difference between .on() and .once().I. Core Node.js Concepts:
+
+Event Loop:
+
+Explain the Node.js Event Loop in detail.
+
+Differentiate between process.nextTick(), setImmediate(), and setTimeout(fn, 0). When would you use each?
+
+How does Node.js handle concurrency with its single-threaded nature?
+
+Asynchronous Programming:
+
+Explain Promises, async/await. What are their advantages over callbacks?
+
+What is "callback hell" and how do you avoid it?
+
+How do you handle errors in asynchronous Node.js code?
+
+Modules:
+
+Explain module.exports and require().
+
+What are the differences between CommonJS and ES6 modules in Node.js?
+
+Streams and Buffers:
+
+What are Node.js Streams? Explain different types (Readable, Writable, Duplex, Transform) and their use cases.
+
+When would you use Buffers in Node.js?
+
+Event Emitter:
+
+What is EventEmitter and how do you use it?
+
+Difference between .on() and .once().
+
+Process Management:
+
+Explain child_process module. Differentiate between fork(), spawn(), exec(), and execFile(). When to use which?
+
+How can you enhance Node.js performance through clustering? Explain the role of the cluster manager.
+
+What is a thread pool and which library handles it in Node.js?
+
+II. Web Frameworks (Likely Express.js):
+
+Explain middleware in Express.js. How do you create custom middleware?
+
+How do you handle routing in Express.js?
+
+How do you manage error handling in an Express.js application?
+
+How would you connect a MongoDB/SQL database to a Node.js application?
+
+Describe how you would implement RESTful APIs using Node.js and Express.
+
+How do you handle file uploads in Node.js?
+
+III. Performance and Optimization:
+
+How do you optimize performance in a Node.js application? (e.g., caching, load balancing, minimizing synchronous code, monitoring tools like PM2).
+
+Discuss strategies for handling high traffic and scalability in Node.js applications.
+
+What are memory leaks in Node.js and how do you detect and prevent them?
+
+How would you debug a Node.js application?
+
+IV. Databases (SQL/NoSQL):
+
+Experience with specific databases (e.g., MongoDB, MySQL, PostgreSQL).
+
+How do you interact with databases from Node.js (e.g., Mongoose for MongoDB, sequelize for SQL)?
+
+Explain ACID properties (for SQL) or CAP theorem (for NoSQL).
+
+Schema design considerations.
+
+Query optimization.
+
+V. Testing and Security:
+
+How do you test Node.js applications (unit, integration, end-to-end)? What testing frameworks have you used (e.g., Jest, Mocha, Chai)?
+
+Discuss common security vulnerabilities in Node.js applications (e.g., SQL injection, XSS, CSRF, authentication/authorization issues) and how to mitigate them.
+
+How do you handle CORS in Node.js?
+
+VI. Deployment and DevOps (Depending on the role's scope):
+
+Experience with deployment tools and platforms (e.g., Docker, Kubernetes, AWS, Azure, GCP).
+
+Knowledge of CI/CD pipelines for Node.js applications.
+
+VII. JavaScript Fundamentals (Expected Strong Knowledge):
+
+Closures, this keyword, prototypes.
+
+Hoisting, scope (lexical, block).
+
+bind, call, apply.
+
+ES6+ features (arrow functions, destructuring, spread/rest operators, Promises, async/await, classes).
+
+Data Structures and Algorithms (array manipulation, string problems, linked lists, trees, sorting, searching) - this is crucial for the coding rounds.
+
+VIII. Problem-Solving & Design:
+
+Coding Challenges: Be prepared to write clean, efficient, and well-structured code on the spot. This could involve algorithms, data structures, or practical Node.js scenarios.
+
+System Design Questions:
+
+Design a scalable chat application using Node.js.
+
+How would you build a microservices architecture with Node.js?
+
+Design an API for a specific scenario, considering error handling, authentication, and performance.
+
+Tips for Success:
+
+Be clear on your experience: Articulate your roles and responsibilities in previous Node.js projects.
+
+Strong fundamentals: Don't neglect JavaScript basics and Data Structures & Algorithms.
+
+Hands-on experience: Be prepared to discuss specific technical challenges you've faced and how you've overcome them.
+
+Understand the "Why": For every concept, be ready to explain why it's used, its benefits, and potential drawbacks.
+
+Practice coding: Solve coding problems regularly, especially those related to string manipulation, arrays, and basic DSA.
+
+Research Persistent Systems: Understand their values, recent projects, and culture. Be able to explain why you want to work for them.
+
+Ask questions: Prepare intelligent questions to ask the interviewers at the end of each round. This shows your interest and engagement.
+
+Good luck with your interview!
+
+Process Management:
+
+Explain child_process module. Differentiate between fork(), spawn(), exec(), and execFile(). When to use which?
+
+How can you enhance Node.js performance through clustering? Explain the role of the cluster manager.
+
+What is a thread pool and which library handles it in Node.js?
+
+II. Web Frameworks (Likely Express.js):
+
+Explain middleware in Express.js. How do you create custom middleware?
+
+How do you handle routing in Express.js?
+
+How do you manage error handling in an Express.js application?
+
+How would you connect a MongoDB/SQL database to a Node.js application?
+
+Describe how you would implement RESTful APIs using Node.js and Express.
+
+How do you handle file uploads in Node.js?
+
+III. Performance and Optimization:
+
+How do you optimize performance in a Node.js application? (e.g., caching, load balancing, minimizing synchronous code, monitoring tools like PM2).
+
+Discuss strategies for handling high traffic and scalability in Node.js applications.
+
+What are memory leaks in Node.js and how do you detect and prevent them?
+
+How would you debug a Node.js application?
+
+IV. Databases (SQL/NoSQL):
+
+Experience with specific databases (e.g., MongoDB, MySQL, PostgreSQL).
+
+How do you interact with databases from Node.js (e.g., Mongoose for MongoDB, sequelize for SQL)?
+
+Explain ACID properties (for SQL) or CAP theorem (for NoSQL).
+
+Schema design considerations.
+
+Query optimization.
+
+V. Testing and Security:
+
+How do you test Node.js applications (unit, integration, end-to-end)? What testing frameworks have you used (e.g., Jest, Mocha, Chai)?
+
+Discuss common security vulnerabilities in Node.js applications (e.g., SQL injection, XSS, CSRF, authentication/authorization issues) and how to mitigate them.
+
+How do you handle CORS in Node.js?
+
+VI. Deployment and DevOps (Depending on the role's scope):
+
+Experience with deployment tools and platforms (e.g., Docker, Kubernetes, AWS, Azure, GCP).
+
+Knowledge of CI/CD pipelines for Node.js applications.
+
+VII. JavaScript Fundamentals (Expected Strong Knowledge):
+
+Closures, this keyword, prototypes.
+
+Hoisting, scope (lexical, block).
+
+bind, call, apply.
+
+ES6+ features (arrow functions, destructuring, spread/rest operators, Promises, async/await, classes).
+
+Data Structures and Algorithms (array manipulation, string problems, linked lists, trees, sorting, searching) - this is crucial for the coding rounds.
+
+VIII. Problem-Solving & Design:
+
+Coding Challenges: Be prepared to write clean, efficient, and well-structured code on the spot. This could involve algorithms, data structures, or practical Node.js scenarios.
+
+System Design Questions:
+
+Design a scalable chat application using Node.js.
+
+How would you build a microservices architecture with Node.js?
+
+Design an API for a specific scenario, considering error handling, authentication, and performance.
+
+Tips for Success:
+
+Be clear on your experience: Articulate your roles and responsibilities in previous Node.js projects.
+
+Strong fundamentals: Don't neglect JavaScript basics and Data Structures & Algorithms.
+
+Hands-on experience: Be prepared to discuss specific technical challenges you've faced and how you've overcome them.
+
+Understand the "Why": For every concept, be ready to explain why it's used, its benefits, and potential drawbacks.
+
+Practice coding: Solve coding problems regularly, especially those related to string manipulation, arrays, and basic DSA.
+
+Research Persistent Systems: Understand their values, recent projects, and culture. Be able to explain why you want to work for them.
+
+Ask questions: Prepare intelligent questions to ask the interviewers at the end of each round. This shows your interest and engagement.
+
+Good luck with your interview!

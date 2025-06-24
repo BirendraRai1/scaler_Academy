@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+  .box-container {
+    width: 300px;
+    height: 150px;
+    border: 2px dashed gray;
+    margin-bottom: 50px; /* To show space below */
+  }
+
+  .relative-box {
+    width: 100px;
+    height: 100px;
+    background-color: lightblue;
+    position: relative; /* Make it relatively positioned */
+    top: 20px;         /* Move 20px down from its original top */
+    left: 30px;        /* Move 30px right from its original left */
+    border: 1px solid blue;
+  }
+
+  .normal-box {
+    width: 100px;
+    height: 100px;
+    background-color: lightcoral;
+    border: 1px solid red;
+    margin-top: 10px; /* To show it's below the preserved space */
+  }
+</style>
+
+
+<body>
+    <div class="box-container">
+        <div class="relative-box"></div>
+        <div class="normal-box"></div>
+    </div>
+</body>
+</html>
+
+<!-- The "Relative Box" would be shifted 20px down and 30px right from where it would have been without top/left. 
+ However, the "Normal Flow Box" would still appear below the original space that the "Relative Box" 
+ occupied, leaving a gap where "Relative Box" was supposed to be. -->
+
+
+ Feature                   position: relative;                  position: absolute;
+
+Document Flow   Stays in normal flow; preserves its space.    Removed from normal flow; no space preserved.
+
+Positioning Ref  Relative to its original position.        Relative to its closest positioned ancestor (or body).
+
+top/left/etc.     Offsets from original position.         Positions within its containing block.
+
+Use Case      Minor adjustments, creating positioning context for children. Overlays, precise placement, overlapping elements.
