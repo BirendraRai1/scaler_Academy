@@ -1,0 +1,12 @@
+2025-06-29 10:33:25 [31merror[39m: Failed to complete simulateTask: This is a simulated error within simulateTask!
+Error: This is a simulated error within simulateTask!
+    at simulateTask (/home/computer/scaler_Academy/akshaySainiQuestions/nodejs/winston-logging-demo/index.js:8:11)
+    at Object.<anonymous> (/home/computer/scaler_Academy/akshaySainiQuestions/nodejs/winston-logging-demo/index.js:40:1)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+    at Module.load (node:internal/modules/cjs/loader:1203:32)
+    at Module._load (node:internal/modules/cjs/loader:1019:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:128:12)
+    at node:internal/main/run_main_module:28:49
+2025-06-29 10:33:26 [31merror[39m: simulateAsyncOperation failed with an error.
+2025-06-29 10:33:26 [31merror[39m: Caught promise rejection in main app .This demonstrates it was logged by Winston too:

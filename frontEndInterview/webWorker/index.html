@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Worker Example (Vanilla JavaScript) - Corrected</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; background-color: #f4f4f4; color: #333; }
+        .container { max-width: 800px; margin: 0 auto; background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1, h2 { color: #0056b3; }
+        button {
+            padding: 12px 25px;
+            font-size: 17px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        #status { margin-top: 15px; font-weight: bold; color: #333; }
+        #result-display {
+            margin-top: 25px;
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            background-color: #fafafa;
+            border-radius: 5px;
+        }
+        pre {
+            background-color: #eee;
+            padding: 10px;
+            border-radius: 4px;
+            white-space: pre-wrap; /* Ensures long lines wrap */
+            word-break: break-all; /* Breaks words if necessary */
+        }
+        .note {
+            background-color: #ffeeba;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Web Worker Example (Vanilla JavaScript)</h1>
+
+        <p>This example demonstrates how a Web Worker can perform a computationally intensive task in a background thread, preventing the main UI from freezing.</p>
+        <p>Click the button to start a heavy calculation. Notice that you can still interact with the page (e.g., try selecting text or opening developer tools) while the calculation is running.</p>
+
+        <button id="startButton">Start Heavy Calculation</button>
+        <p id="status">Status: Idle</p>
+
+        <div id="result-display">
+            <h2>Calculation Result:</h2>
+            <pre id="result-output">No calculation started.</pre>
+        </div>
+
+        <div class="note">
+            <strong>Important:</strong> For this to work, ensure `worker.js` is in the same directory as `index.html`.
+            Also, open your browser's console (F12) to see the logs from both the main thread and the worker thread.
+        </div>
+    </div>
+
+    <script>
+        // --- Main Thread JavaScript Logic ---
+
+        // Get references to DOM elements
+        const startButton = document.getElementById("startButton");
+        const statusDisplay = document.getElementById("status");
+        const resultOutput = document.getElementById("result-output");
+        let myWorker = null; // Initialize worker instance to null
+
+        // Event listener for the "Start Heavy Calculation" button
+        startButton.addEventListener("click", () => {
+            // Check if Web Workers are supported by the current browser
+            if (window.Worker) {
+                // If a worker instance already exists, terminate it to ensure a fresh start
+                // This is good practice for repeated operations or when state needs to be reset
+                if (myWorker) {
+                    myWorker.terminate();
+                    console.log("Main Thread: Existing worker terminated for a fresh start.");
+                }
+
+                // 1. Create a new Web Worker instance
+                // The path 'worker.js' is relative to the location of this HTML file.
+                myWorker = new Worker("worker.js");
+                console.log("Main Thread: New worker created.");
+
+                // Update UI to reflect calculation status
+                statusDisplay.textContent = "Status: Calculating...";
+                resultOutput.textContent = "Calculating... Please wait. (Check console for worker logs)";
+                startButton.disabled = true; // Disable the button while calculation is in progress
+
+                // 2. Listen for messages coming FROM the worker thread
+                myWorker.onmessage = function (event) {
+                    // This function is executed when the worker calls postMessage()
+                    console.log("Main Thread: Message received from worker:", event.data);
+
+                    const result = event.data; // The data sent from the worker
+                    statusDisplay.textContent = "Status: Finished";
+                    resultOutput.textContent = JSON.stringify(result, null, 2); // Display the result nicely
+                    startButton.disabled = false; // Re-enable the button after calculation
+                    console.log("Main Thread: UI updated with worker result.");
+                };
+
+                // 3. Handle errors that occur WITHIN the worker thread
+                myWorker.onerror = function (error) {
+                    // This function is executed if an uncaught error occurs in worker.js
+                    console.error("Main Thread: Worker error caught:", error);
+                    statusDisplay.textContent = `Status: Error occurred! ${error.message}`;
+                    resultOutput.textContent = `Error: ${error.message}`;
+                    startButton.disabled = false; // Re-enable the button
+                    // Prevent default error handling (e.g., logging to console directly by browser)
+                    // If you return true, it indicates you've handled the error.
+                    return true;
+                };
+
+                // 4. Send data TO the worker thread
+                // This triggers the 'onmessage' function inside worker.js
+                const dataToSend = { iterations: 2000000000, message: "Start heavy task!" }; // Sending 2 billion iterations for a noticeable delay
+                myWorker.postMessage(dataToSend);
+                console.log("Main Thread: Message sent to worker to start calculation.");
+
+            } else {
+                // Fallback for browsers that do not support Web Workers
+                statusDisplay.textContent = "Status: Web Workers are NOT supported in this browser.";
+                resultOutput.textContent = "Your browser does not support Web Workers, so the calculation will block the UI.";
+                console.warn("Main Thread: Your browser does not support Web Workers.");
+            }
+        });
+
+        // Optional: Clean up the worker when the page is about to unload
+        // This is good practice to prevent memory leaks and ensure resources are released.
+        window.addEventListener("beforeunload", () => {
+            if (myWorker) {
+                myWorker.terminate(); // Stop the worker thread
+                console.log("Main Thread: Worker terminated on page unload.");
+            }
+        });
+    </script>
+</body>
+</html>

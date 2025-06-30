@@ -1,0 +1,1 @@
+Hi [Name], I just applied for [Role] via Hirist. My experience in [Specific Skill] aligns with your team’s work on [Project]. I’d appreciate the chance to discuss!"

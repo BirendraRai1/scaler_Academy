@@ -1,0 +1,133 @@
+Daily Rotate File (Advanced): For production applications, you'll almost certainly want winston-daily-rotate-file. It automatically creates new log files based on date or size, preventing single log files from growing infinitely large and becoming unmanageable.
+
+Install: npm install winston-daily-rotate-file
+
+Usage (in logger.js):
+
+JavaScript
+
+const DailyRotateFile = require('winston-daily-rotate-file');
+
+// ... in transports array
+new DailyRotateFile({
+  filename: 'logs/application-%DATE%.log', // e.g., application-2025-06-29.log
+  datePattern: 'YYYY-MM-DD',
+  zippedArchive: true,
+  maxSize: '20m', // Max file size before rotation
+  maxFiles: '14d', // Keep logs for 14 days
+  level: 'info'
+}),
+
+
+Understanding when to use logger.error, logger.debug, logger.info, and how to control where these messages go (terminal, error.log, combined.log) is fundamental to effective logging with Winston.
+
+When to Use Each Log Level (logger.error, logger.warn, logger.info, logger.debug, etc.)
+Winston, by default, uses the NPM logging levels, which have a specific severity order (from most severe to least severe):
+
+error (0):
+
+When to use: For critical errors that prevent your application from functioning correctly or indicate a serious problem that requires immediate attention. This could be a failed database connection, an unhandled exception, a crucial API call failing, or data corruption. These logs often warrant alerts to operations teams.
+
+Example: logger.error('Failed to connect to database', { dbHost: 'localhost' }); or logger.error('User authentication failed due to invalid password', { userId: 'xyz' });
+
+warn (1):
+
+When to use: For potential issues or non-critical problems that don't immediately stop your application but might indicate something is amiss or could lead to problems later. These are often things that deserve investigation but aren't emergencies.
+
+Example: logger.warn('Deprecated API endpoint used by client', { endpoint: '/old-api', clientId: '123' }); or logger.warn('Image upload failed, retrying...', { filename: 'image.jpg' });
+
+info (2):
+
+When to use: For general informational messages about the normal operation of your application. This includes significant events like application startup/shutdown, successful operations, major state changes, or key business processes completing. These are often used for auditing or understanding the overall flow.
+
+Example: logger.info('Application started successfully on port 3000.'); or logger.info('User logged in successfully', { userId: 'abc' });
+
+http (3):
+
+When to use: Specifically for HTTP request/response logs. If you're building a web server, this level is perfect for logging details about incoming requests and outgoing responses (e.g., method, URL, status code, response time). Often used with middleware like Morgan.
+
+Example: logger.http('GET /api/users 200 OK', { ip: '192.168.1.1' });
+
+verbose (4):
+
+When to use: For more detailed information than info, often useful for understanding the internal workings of a specific component or function without being overly granular. It's a step up from info in terms of detail.
+
+Example: logger.verbose('Processing user data for export, records found: 1500');
+
+debug (5):
+
+When to use: For fine-grained debugging information. These logs are typically very numerous and provide highly detailed insights into variable values, function calls, and logical flow during development. You would usually disable this in production to avoid performance overhead and excessive log volume.
+
+Example: logger.debug('Calculating total price for order:', { items: cart.items, discount: 0.1 });
+
+silly (6):
+
+When to use: For extremely verbose and granular debugging. This is the lowest level and would include every possible detail, often overwhelming for anything but highly specific debugging scenarios. Almost exclusively for development.
+
+Example: logger.silly('Entering function parseInput, character at index 5 is "A"');
+
+How Levels Determine Where Logs Go (Based on Your logger.js Configuration)
+The magic of controlling where logs go based on their level lies in the level property of each transport in your winston.createLogger configuration.
+
+Here's a breakdown of how the provided logger.js configuration controls log distribution:
+
+JavaScript
+
+const logger = createLogger({
+  level: 'info', // Global default level: Only messages 'info' and above will be processed by the logger instance unless a transport overrides it.
+  format: combine(
+    timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+    logFormat // Your custom printf format
+  ),
+  transports: [
+    // 1. Console Transport
+    new transports.Console({
+      level: 'info', // This transport will log 'info', 'warn', 'error', 'http', 'verbose' (if it were enabled at logger level)
+      format: combine(
+        colorize(),
+        simple()
+      )
+    }),
+
+    // 2. Error File Transport
+    new transports.File({
+      filename: 'logs/error.log',
+      level: 'error', // This transport will ONLY log 'error' messages (and above, but 'error' is the highest default level in NPM)
+      format: combine(
+        timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+        logFormat
+      )
+    }),
+
+    // 3. Combined File Transport
+    new transports.File({
+      filename: 'logs/combined.log',
+      level: 'info', // This transport will log 'info', 'warn', 'error', 'http', 'verbose' (if it were enabled at logger level)
+      format: combine(
+        timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+        logFormat
+      )
+    })
+  ],
+  // ... exceptionHandlers and rejectionHandlers ...
+});
+
+// Conditional Console Transport for Development
+if (process.env.NODE_ENV !== 'production') {
+  logger.add(new transports.Console({
+    format: combine(
+      colorize(),
+      simple()
+    ),
+    level: 'debug' // In development, this console transport will log 'debug' and above.
+  }));
+}
+Understanding the Level Hierarchy:
+
+Winston's levels have numerical values (error=0, warn=1, info=2, http=3, verbose=4, debug=5, silly=6). A transport's level option means "log messages with this level OR any level numerically lower (more severe) than this."
+
+level: 'info' means it will log info, warn, error.
+
+level: 'error' means it will log error.
+
+level: 'debug' means it will log debug, verbose, http, info, warn, error.
