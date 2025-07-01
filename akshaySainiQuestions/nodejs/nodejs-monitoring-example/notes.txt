@@ -1,0 +1,312 @@
+
+Part 2: Setting Up Prometheus Metrics Collection
+This is where prom-client comes into play.
+
+JavaScript
+
+// Create a Registry to register the metrics
+const register = new client.Registry();
+
+//Enable default metrics collection (CPU, memory, event loop,etc)
+client.collectDefaultMetrics({ register });
+const register = new client.Registry();
+
+new client.Registry(): A "Registry" in prom-client is like a central list where you tell the library about all the different metrics (performance data points) you want to collect from your application.
+
+const register = ...: We create an instance of this Registry and store it in register. All our metrics will be added to this register.
+
+client.collectDefaultMetrics({ register });
+
+client.collectDefaultMetrics(): This is a very handy function provided by prom-client. It automatically starts collecting a bunch of common, useful metrics about your Node.js process itself, such as:
+
+CPU usage
+
+Memory usage (how much RAM your app is using)
+
+Event loop lag (how busy your Node.js main thread is)
+
+Garbage collection activity
+
+{ register }: We pass our register (the list of metrics) to this function, so these default metrics also get added to our central list.
+
+Part 3: Defining Custom Metrics
+While default metrics are useful, you often want to track things specific to your application's logic. Prometheus offers different "types" of metrics. Here, we're using three common ones: Counter, Histogram, and Gauge.
+
+JavaScript
+
+//------Custom Metrics------//
+
+// 1. Counter :Tracks the number of times an event occurs
+const httpRequestCounter = new client.Counter({
+  name: 'http_request_total',
+  help: 'Total number of HTTP requests',
+  labelNames: ['method', 'route', 'status_code'],
+});
+
+register.registerMetric(httpRequestCounter);
+const httpRequestCounter = new client.Counter({...});
+
+new client.Counter(...): We create a new "Counter" metric. A Counter is a metric that only goes up (or resets to zero if the application restarts). It's perfect for counting events.
+
+name: 'http_request_total': This is the unique name of your metric that Prometheus will see. It's usually good to follow Prometheus naming conventions (snake_case, units, and _total for counters).
+
+help: 'Total number of HTTP requests': This is a short, human-readable description of what the metric represents. It helps others understand your metrics.
+
+labelNames: ['method', 'route', 'status_code']: This is crucial! "Labels" allow you to add dimensions to your metrics. Instead of just knowing "total requests," labels let you know "total requests for GET method on / with status 200," or "total requests for POST method on /users with status 500."
+
+method: e.g., 'GET', 'POST'
+
+route: e.g., '/', '/slow', '/error'
+
+status_code: e.g., 200, 500
+
+status_code vs. status-code: This was the bug fix! Prometheus typically expects snake_case (like status_code) for label names, and using hyphens (status-code) can cause issues when you try to use these labels in JavaScript objects later.
+
+register.registerMetric(httpRequestCounter);
+
+After defining httpRequestCounter, we add it to our central register so that prom-client knows to include it when exposing metrics.
+
+JavaScript
+
+//2.Histogram : Measures the duration of values (eg: request durations)
+    const httpRequestDurationSeconds = new client.Histogram({
+        name: 'http_request_duration_seconds',
+        help: 'Duration of HTTP requests in seconds',
+        labelNames: ['method', 'route', 'status_code'],
+        buckets : [0.1, 0.5, 1, 2, 5], // Buckets for request duration
+    });
+
+    register.registerMetric(httpRequestDurationSeconds);
+const httpRequestDurationSeconds = new client.Histogram({...});
+
+new client.Histogram(...): A Histogram is used to track the distribution of values, typically for things like durations or sizes. It allows you to see how many requests finished within 100ms, how many between 100ms and 500ms, etc. This is much more informative than just an average.
+
+name: 'http_request_duration_seconds': Name for the metric. _seconds indicates the unit.
+
+help: 'Duration of HTTP requests in seconds': Description.
+
+labelNames: ['method', 'route', 'status_code']: Same labels as the Counter, allowing us to break down durations by these dimensions.
+
+buckets : [0.1, 0.5, 1, 2, 5]: This is the core of a Histogram. These are "buckets" or ranges in seconds. When a request finishes, prom-client will count it in the appropriate bucket.
+
+0.1: Less than or equal to 0.1 seconds (100 milliseconds)
+
+0.5: Less than or equal to 0.5 seconds (500 milliseconds)
+
+1: Less than or equal to 1 second
+
+And so on.
+
+Prometheus will then give you counts for each bucket, plus a _sum (total duration) and _count (total observations), which are used to calculate percentiles (e.g., "95% of my requests complete in less than X seconds").
+
+register.registerMetric(httpRequestDurationSeconds);: Add to the registry.
+
+JavaScript
+
+//3.Gauge : Represents a value that can go up and down (eg: current memory usage)
+const activeUsersGauge = new client.Gauge({
+  name: 'active_users',
+  help: 'Number of currently active users',
+})
+
+register.registerMetric(activeUsersGauge);
+const activeUsersGauge = new client.Gauge({...});
+
+new client.Gauge(...): A Gauge is a metric that represents a single numerical value that can go up and down. It's used for things like current temperature, number of active users, queue size, etc.
+
+name: 'active_users': Name of the metric.
+
+help: 'Number of currently active users': Description.
+
+Notice there are no labelNames here. This metric just tracks a single, overall value. If you wanted to track active users per region, you'd add a region label.
+
+register.registerMetric(activeUsersGauge);: Add to the registry.
+
+Part 4: Defining Express Routes (Our Web Application Logic)
+This is where the Express application (app) comes to life, handling incoming web requests and integrating our custom metrics.
+
+JavaScript
+
+//---Express Routes---//
+
+app.get('/', (req, res) => {
+    //Increment the counter for this specific route and method
+    httpRequestCounter.inc({ method: req.method, route: '/', status_code: 200 });
+    const end = httpRequestDurationSeconds.startTimer();//start timer for response duration
+    //simulate some work
+    setTimeout(() => {
+        res.send('Hello from Node.js ');
+        end({ method: req.method, route: '/', status_code: 200 }); //end timer and record duration
+    },1000);
+})
+app.get('/', (req, res) => { ... });
+
+This defines a "route." It means: "When someone sends an HTTP GET request to the root path (/) of my web application, execute the function provided."
+
+(req, res): This is a standard Express callback function.
+
+req (request): An object containing information about the incoming request (like the URL, method, headers, etc.).
+
+res (response): An object used to send a response back to the client (like text, HTML, JSON, etc.).
+
+httpRequestCounter.inc({ method: req.method, route: '/', status_code: 200 });
+
+Inside the route, this line increments our httpRequestCounter.
+
+.inc(): This is the method specific to Counter metrics.
+
+{ method: req.method, route: '/', status_code: 200 }: We provide an object where the keys match the labelNames we defined earlier (method, route, status_code).
+
+req.method: Gets the actual HTTP method (e.g., 'GET') from the incoming request.
+
+route: '/': We hardcode the route here as /.
+
+status_code: 200: We indicate that this request is expected to return a 200 OK status.
+
+So, every time someone visits http://localhost:3000/, this counter will go up for "GET requests on / with status 200."
+
+const end = httpRequestDurationSeconds.startTimer();
+
+.startTimer(): This method is specific to Histogram (and Summary) metrics. It starts a high-resolution timer. It returns a function (end) that you call later when the operation is complete.
+
+setTimeout(() => { ... }, 1000);
+
+setTimeout: This is a standard JavaScript function that delays the execution of a piece of code.
+
+() => { ... }: This is an "arrow function" that contains the code to be executed after the delay.
+
+1000: The delay is 1000 milliseconds (1 second). This setTimeout simulates your server doing some work (like fetching data from a database or performing a complex calculation) that takes time.
+
+res.send('Hello from Node.js ');
+
+After the 1-second delay, this sends the text "Hello from Node.js" back to the web browser that made the request.
+
+end({ method: req.method, route: '/', status_code: 200 });
+
+Crucially, after res.send(), we call the end() function that startTimer() gave us.
+
+When end() is called, it automatically calculates the time elapsed since startTimer() was called and records that duration into the httpRequestDurationSeconds histogram, again using the same labels.
+
+JavaScript
+
+app.get('/slow',(req,res)=>{
+    httpRequestCounter.inc({ method: req.method, route: '/slow', status_code: 200 });
+    const end = httpRequestDurationSeconds.startTimer();
+    //simulate slow response
+    setTimeout(() => {
+        res.send('This was a slow response');
+        end({ method: req.method, route: '/slow', status_code: 200 });
+    }, 1000); // This is actually a 1-second delay
+})
+This is almost identical to the / route, but for the /slow path.
+
+It also simulates a 1-second delay, increments the counter, and records the duration with the appropriate labels for the /slow route.
+
+JavaScript
+
+app.get('/error', (req, res) => {
+    httpRequestCounter.inc({ method: req.method, route: '/error', status_code: 500 });
+    res.status(500).send('Something went wrong!');
+})
+This route handles requests to /error.
+
+httpRequestCounter.inc({ ..., status_code: 500 });: Here, we increment the counter, but this time we explicitly set the status_code label to 500 (indicating a server error). This allows you to track error rates specifically.
+
+res.status(500).send('Something went wrong!');: This sends an HTTP status code of 500 (Internal Server Error) along with a message, signaling an error to the client.
+
+JavaScript
+
+//simulate active users changing
+let currentActiveUsers = 0;
+setInterval(() => {
+    currentActiveUsers = Math.floor(Math.random() * 100); // Random active users count
+    activeUsersGauge.set(currentActiveUsers); // Update the gauge with current active users
+},5000); // Update every 5 seconds
+let currentActiveUsers = 0;: We declare a variable to hold our simulated active user count. let means its value can be changed.
+
+setInterval(() => { ... }, 5000);
+
+setInterval: This is another standard JavaScript function that repeatedly executes a piece of code after a fixed delay.
+
+5000: The delay is 5000 milliseconds (5 seconds). So, the code inside the function will run every 5 seconds.
+
+currentActiveUsers = Math.floor(Math.random() * 100);
+
+Math.random(): Generates a random number between 0 (inclusive) and 1 (exclusive).
+
+* 100: Multiplies it by 100, so you get a number between 0 and 99.999...
+
+Math.floor(): Rounds the number down to the nearest whole integer.
+
+So, currentActiveUsers will be a random whole number between 0 and 99.
+
+activeUsersGauge.set(currentActiveUsers);
+
+.set(): This is the method specific to Gauge metrics. It sets the gauge's value to the number you provide.
+
+Every 5 seconds, our activeUsersGauge metric will be updated with a new random value, simulating fluctuating active users.
+
+Part 5: Exposing Metrics to Prometheus
+This is the crucial part that allows Prometheus to actually get the data from your Node.js application.
+
+JavaScript
+
+//----Metrics Endpoint----//
+app.get('/metrics', async (req, res) => {
+        res.set('Content-Type', register.contentType);
+        res.end(await register.metrics());
+})
+app.get('/metrics', async (req, res) => { ... });
+
+We define another Express route, specifically for the path /metrics. This is a standard path where Prometheus expects to find metrics.
+
+async (req, res) => { ... }: The async keyword means this function can use await inside it.
+
+res.set('Content-Type', register.contentType);
+
+res.set(): Sets an HTTP header for the response.
+
+'Content-Type': This header tells the client (in this case, Prometheus) what kind of data is being sent.
+
+register.contentType: The prom-client library provides the correct Content-Type string (e.g., text/plain; version=0.0.4; charset=utf-8) that Prometheus expects for metric data.
+
+res.end(await register.metrics());
+
+register.metrics(): This is the core function call that tells prom-client to go to our register (our list of all metrics), gather all the current values, and format them into a plain text string that Prometheus can understand. This operation might take a tiny bit of time, so it's awaited.
+
+res.end(...): Sends the final formatted metrics string as the response body.
+
+When you visit http://localhost:3000/metrics in your browser, you will see a lot of text. This text is the raw metric data that Prometheus would "scrape" (collect) from your application.
+
+Part 6: Starting the Server
+JavaScript
+
+app.listen(PORT,()=>{
+    console.log(`Server is listening on port ${PORT}`);
+    console.log(`Metrics  available at http://localhost:${PORT}/metrics`);
+})
+app.listen(PORT, () => { ... });
+
+This line tells our Express application (app) to start listening for incoming network requests on the specified PORT.
+
+Once the server successfully starts listening, the callback function () => { ... } is executed.
+
+console.log(...): These lines simply print messages to your terminal, letting you know that the server has started and on which port, and reminding you where to find the metrics.
+
+How it all works together (The Monitoring Flow):
+
+Your Node.js app starts: It initializes Express and prom-client.
+
+Metrics are defined and registered: You tell prom-client what performance data you care about (default metrics, custom counters, histograms, gauges).
+
+App runs its logic: As people visit /, /slow, or /error, your app does its work, and simultaneously, it uses httpRequestCounter.inc() and httpRequestDurationSeconds.startTimer()/end() to update the metric values. The setInterval updates the activeUsersGauge.
+
+Prometheus "scrapes" metrics: In a real-world setup, you would have a separate Prometheus server running. Prometheus is configured to periodically (e.g., every 15 seconds) visit your Node.js app's /metrics endpoint (http://localhost:3000/metrics).
+
+Data is collected: When Prometheus visits /metrics, your Node.js app instantly generates and sends the current state of all its registered metrics as plain text.
+
+Prometheus stores data: Prometheus receives this text, parses it, and stores the time-series data in its database.
+
+Grafana visualizes data: You then use a tool like Grafana (which connects to Prometheus) to create beautiful dashboards, charts, and alerts based on this stored metric data, allowing you to monitor your application's health and performance over time.
+
+This code provides the crucial first step: instrumenting your Node.js application to expose its performance data in a way that modern monitoring systems can consume.

@@ -8,7 +8,7 @@ function Parent() {
     console.log("Button clicked");
   }, []);
 
-  //to check whether handleClick refrence is being recreated
+  //to check whether handleClick reference is being recreated
   useEffect(() => {
     console.log("Learning function reference:", handleClick);
   }, [handleClick]);
