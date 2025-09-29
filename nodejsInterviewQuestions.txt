@@ -250,6 +250,81 @@ How do you handle file uploads in Node.js?
 III. Performance and Optimization:
 
 How do you optimize performance in a Node.js application? (e.g., caching, load balancing, minimizing synchronous code, monitoring tools like PM2).
+                                Code-Level Optimization
+
+                                Avoid synchronous/blocking code
+
+                                Prefer asynchronous (fs.readFile) over synchronous (fs.readFileSync) methods.
+
+                                Use async/await with care, avoid awaiting inside loops; instead, use Promise.all.
+
+                                Optimize event loop usage
+
+                                Offload CPU-intensive tasks (e.g., image processing, encryption) to worker threads or external services.
+
+                                Use setImmediate() / process.nextTick() for splitting heavy computations.
+
+                                Efficient data handling
+
+                                Use streams for large file or data transfers instead of loading everything in memory.
+
+                                Use Buffer for binary data.
+
+                                Connection pooling
+
+                                Use database connection pools (e.g., with pg-pool for PostgreSQL, mongoose connection pooling for MongoDB).
+
+                                🔹 2. Caching Strategies
+
+                                In-memory caching
+
+                                Use node-cache or lru-cache for quick lookups.
+
+                                Distributed caching
+
+                                Use Redis or Memcached for caching across multiple servers.
+
+                                Cache results of frequent DB queries or API responses.
+
+                                HTTP caching
+
+                                Leverage ETags, Cache-Control, and Last-Modified headers.
+
+                                CDN for static assets.
+
+                                🔹 3. Load Balancing & Scalability
+
+                                Clustering
+
+                                Node.js runs single-threaded; use the cluster module or PM2 cluster mode to utilize all CPU cores.
+
+                                Horizontal scaling
+
+                                Run multiple Node.js instances behind a load balancer (NGINX, HAProxy, AWS ELB, Kubernetes).
+
+                                Reverse proxying
+
+                                Use NGINX as a reverse proxy for SSL termination, caching, and request routing.
+
+                                🔹 4. Monitoring & Profiling
+
+                                Process monitoring
+
+                                Use PM2 for process management, automatic restarts, clustering, and metrics.
+
+                                Example: pm2 start app.js -i max (runs one process per CPU core).
+
+                                APM tools
+
+                                New Relic, AppDynamics, Datadog, Elastic APM for deeper performance insights.
+
+                                Monitor event loop delays (clinic doctor, clinic flame).
+
+                                Logging & Metrics
+
+                                Use winston or pino for structured logging.
+
+                                Expose metrics with Prometheus + Grafana.
 
 Discuss strategies for handling high traffic and scalability in Node.js applications.
 

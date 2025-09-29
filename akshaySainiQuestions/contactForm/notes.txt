@@ -1,0 +1,12 @@
+1. Install Dependencies
+npm install --save-dev vitest @testing-library/react @testing-library/jest-dom jsdom
+2. Vitest Configuration
+import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './setupTests.js', // Optional, for jest-dom matchers
+  },
+});

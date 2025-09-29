@@ -1,0 +1,62 @@
+1. React Fundamentals
+
+Q1. How does React’s reconciliation algorithm (Fiber) work when updating the DOM?
+Q2. What are the differences between controlled and uncontrolled components? When would you use one over the other?
+Q3. Explain the difference between functional components with hooks and class components. Why did React move towards hooks?
+
+2. Hooks & Advanced Concepts
+
+Q4. Explain how the useEffect hook works. What problems can arise if you don’t provide a dependency array correctly?
+Q5. Can you explain the difference between useMemo and useCallback? Give examples of when each is useful.
+Q6. How would you implement a custom hook for debouncing an input field?
+
+3. State Management & Data Flow
+
+Q7. What are the trade-offs between Context API and Redux for state management?
+Q8. Suppose you have a dashboard where multiple components consume the same data source (e.g., user profile). How would you design the state flow to avoid redundant API calls?
+Q9. How do you handle global error handling (like API errors, auth failures) in a React app?
+
+4. Performance & Optimization
+
+Q10. What are some ways to optimize performance in a React application with large lists (say 50,000 rows)?
+Q11. How does React’s virtual DOM help with performance, and what are its limitations?
+Q12. Explain how React.memo, useMemo, and lazy loading differ in optimizing performance.
+
+5. System Design with React
+
+Q13. Imagine you are building an ecommerce product page in React:
+
+Product images carousel
+
+Reviews section with pagination
+
+Real-time stock updates
+How would you design this in terms of components, state management, and API integration?
+
+Q14. How would you design a React micro-frontend architecture for a large-scale app (e.g., Amazon dashboard with cart, recommendations, orders)?
+
+6. Testing & Best Practices
+
+Q15. How do you test React components? Difference between unit tests (Jest/RTL) and E2E tests (Cypress/Playwright)?
+Q16. How do you ensure accessibility (a11y) in a React app?
+
+7. Behavioral / SDE-2 Depth
+
+Q17. Tell me about a time you had to refactor a large React component that had grown unmanageable. What strategy did you take?
+Q18. At SDE-2 level, you may need to mentor junior engineers. How would you guide a junior who writes heavy prop-drilled React code?x``
+
+1. Explain Debounce vs Throttle. When and why to use each?
+2. What is event delegation? How does it improve performance?
+3. How does prototypal inheritance work in JavaScript?
+4. What are closures and how can they cause memory leaks if not handled properly?
+5. Explain the difference between == and ===. When should you use each?
+6. How does JavaScript handle the this keyword in different contexts (global, object method, arrow functions)?
+7. What are generators and how do they work?
+8. Explain the concept of currying and provide a practical example.
+9. What is the difference between synchronous and asynchronous code? How can you handle async flow?
+10. How do you optimize performance for large lists or tables in the browser?
+11. Explain how JavaScript’s garbage collection works.
+12. What are modules in JavaScript and how do ES6 modules differ from CommonJS?
+13. Explain how the event loop works with microtasks and macrotasks.
+14. How would you implement deep cloning of an object?
+15. What are Symbols in JavaScript and when would you use them?

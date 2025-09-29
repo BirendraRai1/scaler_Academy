@@ -1,0 +1,28 @@
+Q>what is flex-wrap?
+Ans>flex-wrap: nowrap; (default):
+       Flex items are forced onto a single line, potentially causing overflow if the items are wider than the container. 
+flex-wrap: wrap;:
+       flex-wrap is a CSS property that controls how flex items are arranged 
+       within a flex container when there isn't enough space on a single line.
+    It determines whether items should wrap onto multiple lines or be forced 
+        onto a single line. By default, flex items are forced onto a single line (no wrap),
+         which can lead to overflow if the items' combined width exceeds the container's width. 
+         Setting flex-wrap to wrap allows items to wrap onto multiple lines, improving 
+         responsiveness and preventing overflow. 
+flex-wrap: wrap-reverse;:
+Similar to wrap, but the order of the lines is reversed. 
+
+
+Q>If the padding property has two values:
+
+padding: 25px 50px;
+top and bottom paddings are 25px
+right and left paddings are 50px
+
+
+Q>Difference between gap and margin?
+In CSS, margin creates space around an element, while gap creates space 
+between elements within a grid or flexbox container. Margins are for 
+individual element spacing, while gaps are for spacing between items in a 
+layout. 
+

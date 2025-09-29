@@ -61,9 +61,12 @@ module.exports = logger;
 
 
 /*What is Winston?
-Winston is a versatile and highly popular logging library for Node.js. It's designed to be simple and universal, providing robust and flexible logging capabilities. Here's why it's a go-to choice for many developers:
+Winston is a versatile and highly popular logging library for Node.js. 
+It's designed to be simple and universal, providing robust and flexible logging capabilities.
+ Here's why it's a go-to choice for many developers:
 
-Multiple Transports: Winston doesn't just log to the console. It can send your logs to various "transports," such as:
+Multiple Transports: Winston doesn't just log to the console. It can send your logs to
+ various "transports," such as:
 
 Console: The default.
 

@@ -1,0 +1,61 @@
+🔹 1. API Design & Architecture
+
+Design a URL shortener service (like bit.ly) in Node.js.
+→ How do you design APIs, database schema, and caching strategy?
+
+Design a rate-limiting system (per user/IP).
+→ Will you use Redis, in-memory, or token bucket/leaky bucket algo?
+
+Design an authentication system with JWT + refresh tokens.
+→ How do you handle token expiry, refresh cycles, and invalidation?
+
+Design a file upload service (with AWS S3 or Cloud storage).
+→ Presigned URLs vs direct upload vs buffering in Node.js.
+
+Design a chat application backend.
+→ Socket.IO, message persistence, delivery acknowledgment.
+
+🔹 2. System Components & Services
+
+Design a notification system (email, SMS, WhatsApp).
+→ Queue workers (Bull, RabbitMQ, Kafka), retries, user preferences.
+
+Design a cron-based scheduler service in Node.js.
+→ How to persist jobs, handle retries, and run distributed schedulers.
+
+Design a payment system integration.
+→ Handling payment gateway callbacks, retries, transaction states.
+
+🔹 3. Database Design + Node.js Integration
+
+Design an ecommerce order management system.
+→ Order schema, vendor-wise statuses, cancellations, refunds.
+(similar to what you’ve been working on ✅)
+
+Design a search autocomplete system.
+→ MongoDB indexes, Redis caching, API response format.
+
+Design a multi-tenant SaaS application.
+→ Separate DBs per tenant vs shared DB with tenant_id.
+
+🔹 4. Concurrency & Performance
+
+Design a job queue system in Node.js.
+→ Throttling, retries, batch processing.
+
+Design a caching layer (with Redis).
+→ Cache invalidation, TTL, cache warming.
+
+Design a pub/sub system for live updates.
+→ Redis pub/sub vs Kafka vs Socket.IO rooms.
+
+🔹 5. Security & Scalability
+
+Design a role-based access control (RBAC) system.
+→ How will you store permissions, roles, and enforce them in middleware?
+
+Design an API gateway with Node.js.
+→ Rate-limiting, auth, logging, request routing.
+
+Design a multi-region deployment strategy.
+→ Handling latency, session stickiness, DB replication.

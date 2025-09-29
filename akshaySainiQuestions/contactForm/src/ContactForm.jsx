@@ -8,13 +8,41 @@ function ContactForm() {
     const [submittedName, setSubMittedName] = useState("")
 
     const handleChange = (e) => {
-        setForm({...form,[e.target.name]:e.target.value})
+        setForm(prev=>({...prev,[e.target.name]:e.target.value}))
+    }
+
+    const validate = () => {
+        const newErrors = {}
+        if (!form.name.trim())
+            newErrors.name = "Name is required"
+        if (!form.email.trim())
+            newErrors.email = "Email is required"
+        else if (!/^\S+@\S+\.\S+$/.test(form.email))
+            newErrors.email = "Invalid email Format"
+        if (!form.message.trim())
+            newErrors.message = "Message is required"
+        return newErrors
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const validationsErrors = validate()
+        if (Object.keys(validationsErrors).length > 0) {
+            setErrors(validationsErrors)
+        } else {
+            setSubMittedName(form.name)
+            setSubmitted(true)
+            setForm({ name: "", email: "", message: "" })
+            setErrors({})
+        }
     }
    
     return (
         <div>
-            {/* Implement contact form logic here */}
-            <form>
+            {submitted ? (
+                <h2 style={{textAlign:"center"}}>Thank you, {submittedName}!</h2>
+            ) : (
+            <form onSubmit={handleSubmit} data-testid="contact-form">
                 <div style={{marginBottom:"1rem"}}>
                 <label htmlFor="name">Name:</label>
                 <input id="name" type="text"
@@ -22,7 +50,8 @@ function ContactForm() {
                         value={form.name}
                         onChange={handleChange}
                     style={{width:"100%",padding:"0.5rem",marginTop:"0.25rem"}}
-                />
+                            />
+                            {errors.name && (<p style={{color:"red",margin:0}}>{errors.name}</p>)}
                 </div>
                 <div style={{marginBottom:"1rem"}}>
                 <label htmlFor="email">Email:</label>
@@ -31,7 +60,8 @@ function ContactForm() {
                         value={form.email}
                         onChange={handleChange}
                     style={{width:"100%",padding:"0.5rem",marginTop:"0.25rem"}}
-                />
+                            />
+                {errors.email && (<p style={{color:"red",margin:0}}>{errors.email}</p>)}
                 </div>
                 <div style={{marginBottom:"1rem"}}>
                     <label htmlFor="message">Message</label>
@@ -41,7 +71,8 @@ function ContactForm() {
                         value={form.message}
                         onChange={handleChange}
                     style={{width:"100%",padding:"0.5rem",marginTop:"0.25rem"}}
-                    ></textarea>
+                            ></textarea>
+                    {errors.message && (<p style={{color:"red",margin:0}}>{errors.message}</p>)}
                 </div>
                 <button
                     type="submit"
@@ -54,6 +85,8 @@ function ContactForm() {
                     }}
                 >Submit</button>
             </form>
+        )}
+         
         </div>
     );
 }

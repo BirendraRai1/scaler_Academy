@@ -1,0 +1,57 @@
+Core Concepts
+What is MongoDB and how does it differ from SQL databases?
+
+Explain BSON and why MongoDB uses it.
+
+What are collections and documents in MongoDB?
+
+How do you create a collection with options before inserting documents?
+
+MongoDB Features & Operations
+How does MongoDB’s aggregation framework work? Provide an example query.
+
+How would you optimize queries for high-read or high-write loads?
+
+Discuss various types of indexes and when you’d use each.
+
+How does MongoDB support transactions and ACID properties?
+
+Architecture & Internal Operations
+How does sharding work in MongoDB? How do you choose a good shard key?
+
+What are replica sets? How does MongoDB ensure high availability?
+
+Explain how MongoDB handles primary node failure in a replica set.
+
+What is the Oplog and how does it facilitate replication?
+
+System Design Questions
+You’ll be expected to design scalable systems, making architecture choices and justifying why MongoDB is used.
+
+Design a scalable chat or logging system using MongoDB.
+
+Model the schema for an e-commerce application with MongoDB. Discuss embedding vs referencing.
+
+How would you optimize MongoDB schema and indexing for a social media or geospatial app?
+
+How would you secure a MongoDB deployment in production?
+
+Discuss trade-offs between using embedding and referencing for related data.
+
+Query & Aggregation Examples
+Interviewers might provide a sample dataset and ask you to write:
+
+A query to fetch users from a collection with filters and projections.
+
+An aggregation pipeline to calculate total sales per product.
+
+A $lookup stage to join two collections.
+
+Example (aggregation pipeline):
+
+javascript
+db.sales.aggregate([
+  { $match: { status: "completed" } },
+  { $group: { _id: "$product", totalSales: { $sum: "$amount" } } },
+  { $sort: { totalSales: -1 } }
+])
